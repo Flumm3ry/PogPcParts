@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * @author jerem
  */
 public class OrderDB {
+
     // Database parameters for connection - url, username, password
     static String url;
     static String username;
@@ -121,9 +122,8 @@ public class OrderDB {
             stmnt.execute("DROP TABLE " + DB_TABLE);
         } catch (SQLException | IOException ex) {
             ex.printStackTrace();
-        }
-        // do nothing
-         finally {
+        } // do nothing
+        finally {
             // close Statement object
             if (stmnt != null) {
                 try {

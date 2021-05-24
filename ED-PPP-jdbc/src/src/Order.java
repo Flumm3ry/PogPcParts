@@ -12,9 +12,10 @@ import java.sql.Date;
  *
  * @author jerem
  */
-public class Order implements Serializable{
+public class Order implements Serializable {
+
     private final Date date;
-    
+
     public Order(int orderId, Date date) {
         this.date = date;
     }

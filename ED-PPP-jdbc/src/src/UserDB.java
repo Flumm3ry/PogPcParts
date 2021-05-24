@@ -125,9 +125,8 @@ public class UserDB {
             stmnt.execute("DROP TABLE " + DB_TABLE);
         } catch (SQLException | IOException ex) {
             // do nothing
-        }
-        // do nothing
-         finally {
+        } // do nothing
+        finally {
             // close Statement object
             if (stmnt != null) {
                 try {

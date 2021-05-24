@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * @author jerem
  */
 public class ProductDB {
+
     // Database parameters for connection - url, username, password
     static String url;
     static String username;
@@ -125,9 +126,8 @@ public class ProductDB {
             stmnt.execute("DROP TABLE " + DB_TABLE);
         } catch (SQLException | IOException ex) {
             // do nothing
-        }
-        // do nothing
-         finally {
+        } // do nothing
+        finally {
             // close Statement object
             if (stmnt != null) {
                 try {
@@ -201,9 +201,8 @@ public class ProductDB {
             }
         } catch (SQLException | IOException ex) {
             // do nothing
-        }
-        // do nothing
-         finally {
+        } // do nothing
+        finally {
             // close Prepared Statement object
             if (pStmnt != null) {
                 try {

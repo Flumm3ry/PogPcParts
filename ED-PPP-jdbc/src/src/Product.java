@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author jerem
  */
 public class Product implements Serializable {
+
     private final String name;
     private final String description;
     private final float price;

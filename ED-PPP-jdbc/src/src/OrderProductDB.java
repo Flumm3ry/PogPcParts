@@ -16,6 +16,7 @@ import java.sql.Statement;
  * @author jerem
  */
 public class OrderProductDB {
+
     // Database parameters for connection - url, username, password
     static String url;
     static String username;
@@ -123,9 +124,8 @@ public class OrderProductDB {
             stmnt.execute("DROP TABLE " + DB_TABLE);
         } catch (SQLException | IOException ex) {
             // do nothing
-        }
-        // do nothing
-         finally {
+        } // do nothing
+        finally {
             // close Statement object
             if (stmnt != null) {
                 try {
