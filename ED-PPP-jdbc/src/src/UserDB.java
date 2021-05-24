@@ -69,7 +69,7 @@ public class UserDB {
              * Active (currently employed in the company)
              */
             stmnt.execute("CREATE TABLE " + DB_TABLE
-                    + " (UserId INT IDENTITY(1,1) PRIMARY KEY,"
+                    + " (UserId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
                     + " Name VARCHAR(25), "
                     + " Phone CHAR(10), "
                     + " Address VARCHAR(30), "
@@ -78,7 +78,7 @@ public class UserDB {
                     + " AppGroup CHAR(12), "
                     + " Active BOOLEAN)");
         } catch (SQLException ex) {
-            // do nothing
+            ex.printStackTrace();
         } catch (IOException ex) {
             // do nothing
         } finally {
@@ -167,7 +167,8 @@ public class UserDB {
 
             // precompiled query statement
             String preQueryStatement = "INSERT INTO " + DB_TABLE
-                    + " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    + " (Name, Phone, Address, Email, Password, AppGroup, Active)"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             for (User user : userList) {
 
@@ -201,7 +202,7 @@ public class UserDB {
                 }
             }
         } catch (SQLException ex) {
-            // do nothing
+            ex.printStackTrace();
         } catch (IOException ex) {
             // do nothing
         } finally {

@@ -16,7 +16,16 @@ public class SetupDB {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // the database object to access the actual database
+        SetupDB mySetupDB = new SetupDB();
+        
+        mySetupDB.clearAllDbs();
+        
+        mySetupDB.setupUsers();
+        mySetupDB.setupProducts();
+        mySetupDB.setupOrders();
+    }
+    
+    public void clearAllDbs() {
         UserDB userDb = new UserDB();
 
         // make sure no name conflicts
@@ -24,9 +33,40 @@ public class SetupDB {
             userDb.destroyDBTable();
         } catch (Exception ex) {
         }
+        
+        
+        OrderProductDB orderProductDb = new OrderProductDB();
+
+        // make sure no name conflicts
+        try {
+            orderProductDb.destroyDBTable();
+        } catch (Exception ex) {
+        }
+        
+        // the database object to access the actual database
+        ProductDB productDb = new ProductDB();
+
+        // make sure no name conflicts
+        try {
+            productDb.destroyDBTable();
+        } catch (Exception ex) {
+        }
+        
+        OrderDB orderDb = new OrderDB();
+
+        // make sure no name conflicts
+        try {
+            orderDb.destroyDBTable();
+        } catch (Exception ex) {
+        }
+    }
+    
+    public void setupUsers() {
+        // the database object to access the actual database
+        UserDB userDb = new UserDB();
 
         // create the database table
-        System.out.println("Create an empty database table Employee");
+        System.out.println("Creating user database");
         userDb.createDBTable();
 
         System.out.println("Add several static records in the database table");
@@ -50,5 +90,36 @@ public class SetupDB {
 
         // add data to db
         userDb.addRecords(userList);
+    }
+    
+    public void setupProducts() {
+        // the database object to access the actual database
+        ProductDB productDb = new ProductDB();
+
+        // create the database table
+        System.out.println("Create an empty database table Product");
+        productDb.createDBTable();
+    }
+    
+    public void setupOrders() {
+        // the database object to access the actual database
+        OrderDB orderDb = new OrderDB();
+
+        // create the database table
+        System.out.println("Create an empty database table Orders");
+        orderDb.createDBTable();
+        
+        // the database object to access the actual database
+        OrderProductDB orderProductDb = new OrderProductDB();
+
+        // make sure no name conflicts
+        try {
+            orderProductDb.destroyDBTable();
+        } catch (Exception ex) {
+        }
+
+        // create the database table
+        System.out.println("Create an empty database table Order Products");
+        orderProductDb.createDBTable();
     }
 }

@@ -73,14 +73,14 @@ public class ProductDB {
              * Active (currently employed in the company)
              */
             stmnt.execute("CREATE TABLE " + DB_TABLE
-                    + " (ProductId INT IDENTITY(1,1) PRIMARY KEY,"
+                    + " (ProductId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
                     + " Name VARCHAR(25),"
                     + " Description CHAR(10),"
-                    + " Price MONEY,"
+                    + " Price FLOAT,"
                     + " Image VARCHAR(50),"
-                    + " Active BOOLEAN))");
+                    + " Active BOOLEAN)");
         } catch (SQLException | IOException ex) {
-            // do nothing
+            ex.printStackTrace();
         } finally {
             // close Statement object
             if (stmnt != null) {
@@ -167,7 +167,8 @@ public class ProductDB {
 
             // precompiled query statement
             String preQueryStatement = "INSERT INTO " + DB_TABLE
-                    + " VALUES (NULL, ?, ?, ?, ?, ?)";
+                    + " (Name, Description, Price, Image, Active)"
+                    + " VALUES (?, ?, ?, ?, ?)";
 
             for (Product p : productList) {
 

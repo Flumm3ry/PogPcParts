@@ -73,10 +73,10 @@ public class OrderDB {
              * Active (currently employed in the company)
              */
             stmnt.execute("CREATE TABLE " + DB_TABLE
-                    + " (OrderId INT IDENTITY(1,1) PRIMARY KEY,"
-                    + " Date DATETIME)");
+                    + " (OrderId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
+                    + " Date DATE)");
         } catch (SQLException | IOException ex) {
-            // do nothing
+            ex.printStackTrace();
         } finally {
             // close Statement object
             if (stmnt != null) {
@@ -120,7 +120,7 @@ public class OrderDB {
             // execute action query to destroy a data table
             stmnt.execute("DROP TABLE " + DB_TABLE);
         } catch (SQLException | IOException ex) {
-            // do nothing
+            ex.printStackTrace();
         }
         // do nothing
          finally {
@@ -128,77 +128,6 @@ public class OrderDB {
             if (stmnt != null) {
                 try {
                     stmnt.close();
-                } catch (SQLException e) {
-                    // do nothing
-                }
-            }
-
-            // close Connection object
-            if (cnnct != null) {
-                try {
-                    cnnct.close();
-                } catch (SQLException sqlEx) {
-                    // do nothing
-                }
-            }
-        }
-    }
-
-    /**
-     * addRecord()
-     *
-     * @param orderList
-     * @aim Add a record into the database table
-     */
-    public void addRecords(ArrayList<Order> orderList) {
-
-        Connection cnnct = null;
-
-        // create a PreparedStatement object
-        PreparedStatement pStmnt = null;
-
-        try {
-            // get connection
-            cnnct = getConnection();
-
-            // precompiled query statement
-            String preQueryStatement = "INSERT INTO " + DB_TABLE
-                    + " VALUES (NULL, ?)";
-
-            for (Order o : orderList) {
-
-                // get statement
-                pStmnt = cnnct.prepareStatement(preQueryStatement);
-
-                // set individual parameters at corresponding positions
-                pStmnt.setDate(1, o.getDate());
-
-                /*
-                 * execute update query to add record into the data table
-                 * with four fields: CustId, Name, Tel, Age
-                 *
-                 * will return number of records added
-                 */
-                int rowCount = pStmnt.executeUpdate();
-
-                /*
-                 * rowCount should be 1 because 1 record is added
-                 *
-                 * throws exception if not
-                 */
-                if (rowCount == 0) {
-                    throw new SQLException("Cannot insert records!");
-                }
-            }
-        } catch (SQLException | IOException ex) {
-            // do nothing
-        }
-        // do nothing
-         finally {
-            // close Prepared Statement object
-            if (pStmnt != null) {
-                try {
-                    pStmnt.close();
                 } catch (SQLException e) {
                     // do nothing
                 }

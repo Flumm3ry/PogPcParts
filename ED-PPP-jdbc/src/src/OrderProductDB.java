@@ -71,12 +71,14 @@ public class OrderProductDB {
              * Active (currently employed in the company)
              */
             stmnt.execute("CREATE TABLE " + DB_TABLE
-                    + " (OrderProductId INT IDENTITY(1,1) PRIMARY KEY,"
-                    + " OrderId INT FOREIGN KEY REFERENCES PPP_ORDERS(OrderId), "
-                    + " ProductId INT FOREIGN KEY REFERENCES PPP_PRODUCTS(ProductId), "
-                    + " Quantity INT)");
+                    + " (OrderProductId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
+                    + " OrderId INT, "
+                    + " ProductId INT, "
+                    + " Quantity INT,"
+                    + " FOREIGN KEY (OrderId) REFERENCES PPP_ORDERS(OrderId),"
+                    + " FOREIGN KEY (ProductId) REFERENCES PPP_PRODUCTS(ProductId))");
         } catch (SQLException | IOException ex) {
-            // do nothing
+            ex.printStackTrace();
         } finally {
             // close Statement object
             if (stmnt != null) {
