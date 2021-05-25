@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,6 +39,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Products.findByActive", query = "SELECT p FROM Products p WHERE p.active = :active")})
 public class Product implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRICE")
+    private double price;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,9 +56,6 @@ public class Product implements Serializable {
     @Size(max = 10)
     @Column(name = "DESCRIPTION")
     private String description;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "PRICE")
-    private Double price;
     @Size(max = 50)
     @Column(name = "IMAGE")
     private String image;
@@ -92,13 +95,6 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     public String getImage() {
         return image;
@@ -148,6 +144,14 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "entity.Products[ productid=" + productid + " ]";
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
     
 }

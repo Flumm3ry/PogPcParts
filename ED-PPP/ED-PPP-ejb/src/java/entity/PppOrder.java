@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,7 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")
     , @NamedQuery(name = "Orders.findByOrderid", query = "SELECT o FROM Orders o WHERE o.orderid = :orderid")
     , @NamedQuery(name = "Orders.findByDate", query = "SELECT o FROM Orders o WHERE o.date = :date")})
-public class Order implements Serializable {
+public class PppOrder implements Serializable {
+
+    @JoinColumn(name = "USERID", referencedColumnName = "USERID")
+    @ManyToOne(optional = false)
+    private User userid;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,10 +54,10 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "orderid")
     private Collection<ProductOrder> productOrderCollection;
 
-    public Order() {
+    public PppOrder() {
     }
 
-    public Order(Integer orderid) {
+    public PppOrder(Integer orderid) {
         this.orderid = orderid;
     }
 
@@ -90,10 +96,10 @@ public class Order implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Order)) {
+        if (!(object instanceof PppOrder)) {
             return false;
         }
-        Order other = (Order) object;
+        PppOrder other = (PppOrder) object;
         if ((this.orderid == null && other.orderid != null) || (this.orderid != null && !this.orderid.equals(other.orderid))) {
             return false;
         }
@@ -103,6 +109,14 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return "entity.Orders[ orderid=" + orderid + " ]";
+    }
+
+    public User getUserid() {
+        return userid;
+    }
+
+    public void setUserid(User userid) {
+        this.userid = userid;
     }
     
 }

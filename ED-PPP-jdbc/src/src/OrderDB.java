@@ -75,7 +75,9 @@ public class OrderDB {
              */
             stmnt.execute("CREATE TABLE " + DB_TABLE
                     + " (OrderId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
-                    + " Date DATE)");
+                    + " UserId INT NOT NULL,"
+                    + " Date DATE NOT NULL,"
+                    + " FOREIGN KEY (UserId) REFERENCES PPP_USERS(UserId))");
         } catch (SQLException | IOException ex) {
             ex.printStackTrace();
         } finally {

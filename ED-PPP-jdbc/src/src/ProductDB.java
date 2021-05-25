@@ -75,11 +75,11 @@ public class ProductDB {
              */
             stmnt.execute("CREATE TABLE " + DB_TABLE
                     + " (ProductId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
-                    + " Name VARCHAR(25),"
-                    + " Description CHAR(10),"
-                    + " Price FLOAT,"
-                    + " Image VARCHAR(50),"
-                    + " Active BOOLEAN)");
+                    + " Name VARCHAR(25) NOT NULL,"
+                    + " Description CHAR(10) NOT NULL,"
+                    + " Price FLOAT NOT NULL,"
+                    + " Image VARCHAR(50) NOT NULL,"
+                    + " Active BOOLEAN NOT NULL)");
         } catch (SQLException | IOException ex) {
             ex.printStackTrace();
         } finally {

@@ -6,7 +6,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Users.findByAppgroup", query = "SELECT u FROM Users u WHERE u.appgroup = :appgroup")
     , @NamedQuery(name = "Users.findByActive", query = "SELECT u FROM Users u WHERE u.active = :active")})
 public class User implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+    private Collection<PppOrder> pppOrderCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -160,6 +167,15 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "entity.Users[ userid=" + userid + " ]";
+    }
+
+    @XmlTransient
+    public Collection<PppOrder> getPppOrderCollection() {
+        return pppOrderCollection;
+    }
+
+    public void setPppOrderCollection(Collection<PppOrder> pppOrderCollection) {
+        this.pppOrderCollection = pppOrderCollection;
     }
     
 }
