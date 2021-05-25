@@ -5,6 +5,7 @@
  */
 package session;
 
+import entity.UserDTO;
 import javax.ejb.Remote;
 
 /**
@@ -13,5 +14,17 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface UserFacadeRemote {
+
+    UserDTO getUserById(int userId);
+
+    UserDTO getUserByEmail(String email);
+
+    void updateUser(UserDTO userDto);
+
+    void updatePassword(String oldPassword, String newPassword);
+
+    UserDTO[] searchUsers(String searchTerm);
+
+    void adminUpdateUser(String appGroup, boolean isActive);
     
 }

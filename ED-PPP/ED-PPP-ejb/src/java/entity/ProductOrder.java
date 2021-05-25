@@ -42,10 +42,10 @@ public class ProductOrder implements Serializable {
     private Integer quantity;
     @JoinColumn(name = "ORDERID", referencedColumnName = "ORDERID")
     @ManyToOne
-    private Orders orderid;
+    private Order orderid;
     @JoinColumn(name = "PRODUCTID", referencedColumnName = "PRODUCTID")
     @ManyToOne
-    private Products productid;
+    private Product productid;
 
     public ProductOrder() {
     }
@@ -70,19 +70,19 @@ public class ProductOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public Orders getOrderid() {
+    public Order getOrderid() {
         return orderid;
     }
 
-    public void setOrderid(Orders orderid) {
+    public void setOrderid(Order orderid) {
         this.orderid = orderid;
     }
 
-    public Products getProductid() {
+    public Product getProductid() {
         return productid;
     }
 
-    public void setProductid(Products productid) {
+    public void setProductid(Product productid) {
         this.productid = productid;
     }
 

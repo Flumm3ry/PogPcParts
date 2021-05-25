@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price")
     , @NamedQuery(name = "Products.findByImage", query = "SELECT p FROM Products p WHERE p.image = :image")
     , @NamedQuery(name = "Products.findByActive", query = "SELECT p FROM Products p WHERE p.active = :active")})
-public class Products implements Serializable {
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,10 +61,10 @@ public class Products implements Serializable {
     @OneToMany(mappedBy = "productid")
     private Collection<ProductOrder> productOrderCollection;
 
-    public Products() {
+    public Product() {
     }
 
-    public Products(Integer productid) {
+    public Product(Integer productid) {
         this.productid = productid;
     }
 
@@ -135,10 +135,10 @@ public class Products implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Products)) {
+        if (!(object instanceof Product)) {
             return false;
         }
-        Products other = (Products) object;
+        Product other = (Product) object;
         if ((this.productid == null && other.productid != null) || (this.productid != null && !this.productid.equals(other.productid))) {
             return false;
         }

@@ -5,6 +5,7 @@
  */
 package session;
 
+import entity.UserDTO;
 import javax.ejb.Stateless;
 
 /**
@@ -14,6 +15,30 @@ import javax.ejb.Stateless;
 @Stateless
 public class UserFacade implements UserFacadeRemote {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public UserDTO getUserById(int userId) {
+        return null;
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public void updateUser(UserDTO userDto) {
+    }
+
+    @Override
+    public void updatePassword(String oldPassword, String newPassword) {
+    }
+
+    @Override
+    public UserDTO[] searchUsers(String searchTerm) {
+        return null;
+    }
+
+    @Override
+    public void adminUpdateUser(String appGroup, boolean isActive) {
+    }
 }
