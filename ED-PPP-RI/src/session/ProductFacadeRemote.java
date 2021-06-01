@@ -21,10 +21,7 @@ public interface ProductFacadeRemote {
 
     ProductDTO[] searchProducts(String searchTerm);
 
-    void addProduct(ProductDTO productDto);
+    boolean addProduct(ProductDTO productDto);
 
-    void updateProduct(ProductDTO ProductDTO);
-
-    void deleteProduct(int productId);
-    
+    boolean updateProduct(ProductDTO productDto);
 }

@@ -26,5 +26,7 @@ public interface UserFacadeRemote {
     UserDTO[] searchUsers(String searchTerm);
 
     boolean adminUpdateUser(UserDTO userDto);
+
+    boolean addUser(UserDTO userDto);
     
 }

@@ -32,10 +32,6 @@ public class UserFacade implements UserFacadeRemote {
     private void edit(User entity) {
         em.merge(entity);
     }
-
-    private void remove(User entity) {
-        em.remove(em.merge(entity));
-    }
     
     private User find(int id) {
         return em.find(User.class, id);
@@ -124,6 +120,18 @@ public class UserFacade implements UserFacadeRemote {
         if (userDto == null || find(userDto.getUserId()) == null) return false;
         
         edit(DTO2DAO(userDto));
+        
+        return true;
+    }
+
+    @Override
+    public boolean addUser(UserDTO userDto) {
+        if (userDto == null || find(userDto.getUserId()) != null) return false;
+        
+        userDto.setActive(true);
+        userDto.setAppGroup("ppp-user");
+        
+        create(DTO2DAO(userDto));
         
         return true;
     }
