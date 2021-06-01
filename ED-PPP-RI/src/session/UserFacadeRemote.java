@@ -19,12 +19,12 @@ public interface UserFacadeRemote {
 
     UserDTO getUserByEmail(String email);
 
-    void updateUser(UserDTO userDto);
+    boolean updateUser(UserDTO userDto);
 
-    void updatePassword(String oldPassword, String newPassword);
+    boolean updatePassword(int userId, String oldPassword, String newPassword);
 
     UserDTO[] searchUsers(String searchTerm);
 
-    void adminUpdateUser(String appGroup, boolean isActive);
+    boolean adminUpdateUser(UserDTO userDto);
     
 }

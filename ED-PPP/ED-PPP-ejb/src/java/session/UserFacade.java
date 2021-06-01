@@ -5,8 +5,15 @@
  */
 package session;
 
+import entity.User;
 import entity.UserDTO;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -14,10 +21,61 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class UserFacade implements UserFacadeRemote {
+    
+    @PersistenceContext(unitName = "ED-PPP-ejbUSER")
+    private EntityManager em;
+
+    private void create(User entity) {
+        em.persist(entity);
+    }
+
+    private void edit(User entity) {
+        em.merge(entity);
+    }
+
+    private void remove(User entity) {
+        em.remove(em.merge(entity));
+    }
+    
+    private User find(int id) {
+        return em.find(User.class, id);
+    }
+    
+    private User DTO2DAO(UserDTO userDto) {
+        if (userDto == null) return null;
+        
+        User user = new User();
+        user.setUserid(userDto.getUserId());
+        user.setName(userDto.getName());
+        user.setPhone(userDto.getPhone());
+        user.setAddress(userDto.getAddress());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setAppgroup(userDto.getAppGroup());
+        user.setActive(userDto.isActive());
+        
+        return user;
+    }
+    
+    private UserDTO DAO2DTO(User user) {
+        if (user == null) return null;
+        
+        return new UserDTO(user.getUserid(), user.getName(), user.getPhone(), user.getAddress(), user.getEmail(), user.getPassword(), user.getAppgroup(), user.getActive());
+    }
+    
+    private String encryptPassword(String password){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return DatatypeConverter.printHexBinary(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public UserDTO getUserById(int userId) {
-        return null;
+        return DAO2DTO(find(userId));
     }
 
     @Override
@@ -26,11 +84,34 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
-    public void updateUser(UserDTO userDto) {
+    public boolean updateUser(UserDTO userDto) {
+        if (userDto == null || find(userDto.getUserId()) == null) return false;
+        
+        User user = DTO2DAO(userDto);
+        user.setPassword(null);
+        user.setAppgroup(null);
+        user.setActive(null);
+        
+        edit(user);
+        
+        return true;
     }
 
     @Override
-    public void updatePassword(String oldPassword, String newPassword) {
+    public boolean updatePassword(int userId, String oldPassword, String newPassword) {
+        // find the employee
+        User user = find(userId);
+
+        // check again - just to play it safe
+        if (user == null) {
+            return false;
+        }
+        
+        if (!user.getPassword().equals(encryptPassword(oldPassword))) return false;
+        // only need to update the password field
+        user.setPassword(encryptPassword(newPassword));
+        return true;
+        
     }
 
     @Override
@@ -39,6 +120,11 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
-    public void adminUpdateUser(String appGroup, boolean isActive) {
+    public boolean adminUpdateUser(UserDTO userDto) {
+        if (userDto == null || find(userDto.getUserId()) == null) return false;
+        
+        edit(DTO2DAO(userDto));
+        
+        return true;
     }
 }

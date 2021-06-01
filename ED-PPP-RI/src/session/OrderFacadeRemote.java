@@ -15,7 +15,7 @@ import javax.ejb.Remote;
 @Remote
 public interface OrderFacadeRemote {
 
-    void addOrder(OrderDTO orderDto);
+    boolean addOrder(OrderDTO orderDto);
 
     OrderDTO[] getOrdersByUserId(int userId);
     

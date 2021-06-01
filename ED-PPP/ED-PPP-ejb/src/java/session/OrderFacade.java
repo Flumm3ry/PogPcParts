@@ -6,7 +6,10 @@
 package session;
 
 import entity.OrderDTO;
+import entity.PppOrder;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,9 +17,31 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class OrderFacade implements OrderFacadeRemote {
+    
+    @PersistenceContext(unitName = "ED-PPP-ejbOrder")
+    private EntityManager em;
+
+    private void create(PppOrder entity) {
+        em.persist(entity);
+    }
+    
+    private PppOrder find(int id) {
+        return em.find(PppOrder.class, id);
+    }
+    
+    private PppOrder DTO2DAO(OrderDTO orderDto) {
+        PppOrder order = new PppOrder();
+        
+        return order;
+    } 
 
     @Override
-    public void addOrder(OrderDTO orderDto) {
+    public boolean addOrder(OrderDTO orderDto) {
+        if (orderDto == null || find(orderDto.getOrderId()) != null) return false;
+        
+        em.persist(DTO2DAO(orderDto));
+        
+        return true;
     }
 
     @Override
