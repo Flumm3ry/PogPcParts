@@ -6,6 +6,7 @@
 package session;
 
 import entity.CartItemDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -15,10 +16,12 @@ import javax.ejb.Remote;
 @Remote
 public interface CartBeanRemote {
 
-    void addCartItem(CartItemDTO cartItemDto);
+    boolean addCartItem(CartItemDTO cartItemDto);
 
-    void removeCartItem(CartItemDTO cartItemDto);
+    boolean removeCartItem(CartItemDTO cartItemDto);
 
-    CartItemDTO[] getCart();
+    List<CartItemDTO> getCart();
+
+    boolean clearCart();
     
 }

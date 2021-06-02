@@ -6,6 +6,9 @@
 package session;
 
 import entity.CartItemDTO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 
 /**
@@ -15,21 +18,58 @@ import javax.ejb.Stateful;
 @Stateful
 public class CartBean implements CartBeanRemote {
 
-    @Override
-    public void addCartItem(CartItemDTO cartItemDto) {
-    }
+    private List<CartItemDTO> cart;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
-    @Override
-    public void removeCartItem(CartItemDTO cartItemDto) {
-    }
-
-    @Override
-    public CartItemDTO[] getCart() {
-        return null;
+    public CartBean() {
+        cart = new ArrayList();
     }
     
+    @Remove
+    public void remove() {
+        cart = null;
+    }
     
+    @Override
+    public boolean addCartItem(CartItemDTO cartItemDto) {
+        if (cartItemDto == null) return false;
+        
+        int index = cart.indexOf(cartItemDto);
+        
+        if (index == -1) {
+            return cart.add(cartItemDto);
+        }
+        
+        try {
+            CartItemDTO itemToUpdate = cart.get(index);
+            itemToUpdate.setQuantity(itemToUpdate.getQuantity() + cartItemDto.getQuantity());
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return false;
+    }
+
+    @Override
+    public boolean removeCartItem(CartItemDTO cartItemDto) {
+        try {
+            // will return true if any items were deleted
+            return cart.removeIf(ci -> ci.getProductId() == cartItemDto.getProductId());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<CartItemDTO> getCart() {
+        return cart;
+    }
+
+    @Override
+    public boolean clearCart() {
+        cart = new ArrayList();
+        
+        return true;
+    }
 }
