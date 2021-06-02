@@ -6,6 +6,7 @@
 package session;
 
 import entity.OrderDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -17,6 +18,6 @@ public interface OrderFacadeRemote {
 
     boolean addOrder(OrderDTO orderDto);
 
-    OrderDTO[] getOrdersByUserId(int userId);
+    List<OrderDTO> getOrdersByUserId(int userId);
     
 }

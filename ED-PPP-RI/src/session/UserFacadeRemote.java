@@ -6,6 +6,7 @@
 package session;
 
 import entity.UserDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -23,7 +24,7 @@ public interface UserFacadeRemote {
 
     boolean updatePassword(int userId, String oldPassword, String newPassword);
 
-    UserDTO[] searchUsers(String searchTerm);
+    List<UserDTO> searchUsers(String searchTerm);
 
     boolean adminUpdateUser(UserDTO userDto);
 

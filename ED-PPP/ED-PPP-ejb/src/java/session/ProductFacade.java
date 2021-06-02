@@ -5,8 +5,13 @@
  */
 package session;
 
+import com.sun.xml.ws.util.StringUtils;
 import entity.Product;
 import entity.ProductDTO;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +48,7 @@ public class ProductFacade implements ProductFacadeRemote {
         product.setImage(productDto.getImage());
         product.setPrice(productDto.getPrice());
         product.setActive(productDto.isActive());
+        product.setCategory(productDto.getCategory());
         
         return product;
     }
@@ -50,8 +56,21 @@ public class ProductFacade implements ProductFacadeRemote {
     private ProductDTO DAO2DTO(Product product) {
         if (product == null) return null;
         
-        return new ProductDTO(product.getProductid(), product.getName(), product.getDescription(), product.getImage(), product.getActive(), product.getPrice());
+        return new ProductDTO(product.getProductid(), product.getName(), product.getDescription(), product.getImage(), product.getActive(), product.getPrice(), product.getCategory());
     }
+    
+    private List<Product> getSearchedProducts(String searchTerm, String category) {
+        if (category == null) category = "";
+        if (searchTerm == null) searchTerm = "";
+        category = "%" + category + "%";
+        searchTerm = "%" + searchTerm + "%";
+        
+        return em.createQuery("SELECT p FROM Products p WHERE p.name LIKE :searchTerm AND p.category LIKE :category", Product.class)
+                .setParameter("searchTerm", searchTerm)
+                .setParameter("category", category)
+                .getResultList();
+    }
+   
 
     @Override
     public ProductDTO getProductById(int productId) {
@@ -59,13 +78,22 @@ public class ProductFacade implements ProductFacadeRemote {
     }
 
     @Override
-    public ProductDTO[] getActiveProducts(boolean priceAscending, String category) {
-        return null;
+    public List<ProductDTO> searchProducts(String searchTerm, boolean priceAscending, String category) {
+        return getSearchedProducts(searchTerm, category)
+                .stream()
+                .filter(p -> p.getActive())
+                .sorted(priceAscending ? Comparator.comparingDouble(Product::getPrice) : Comparator.comparingDouble(Product::getPrice).reversed())
+                .map(p -> DAO2DTO(p))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ProductDTO[] searchProducts(String searchTerm) {
-        return null;
+    public List<ProductDTO> adminSearchProducts(String searchTerm, boolean priceAscending, String category) {
+        return getSearchedProducts(searchTerm, category)
+                .stream()
+                .sorted(priceAscending ? Comparator.comparingDouble(Product::getPrice) : Comparator.comparingDouble(Product::getPrice).reversed())
+                .map(p -> DAO2DTO(p))
+                .collect(Collectors.toList());
     }
 
     @Override

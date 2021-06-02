@@ -79,6 +79,7 @@ public class ProductDB {
                     + " Description CHAR(10) NOT NULL,"
                     + " Price FLOAT NOT NULL,"
                     + " Image VARCHAR(50) NOT NULL,"
+                    + " Category VARCHAR(50) NOT NULL,"
                     + " Active BOOLEAN NOT NULL)");
         } catch (SQLException | IOException ex) {
             ex.printStackTrace();
@@ -167,8 +168,8 @@ public class ProductDB {
 
             // precompiled query statement
             String preQueryStatement = "INSERT INTO " + DB_TABLE
-                    + " (Name, Description, Price, Image, Active)"
-                    + " VALUES (?, ?, ?, ?, ?)";
+                    + " (Name, Description, Price, Image, Category, Active)"
+                    + " VALUES (?, ?, ?, ?, ?, ?)";
 
             for (Product p : productList) {
 
@@ -180,7 +181,8 @@ public class ProductDB {
                 pStmnt.setString(2, p.getDescription());
                 pStmnt.setFloat(3, p.getPrice());
                 pStmnt.setString(4, p.getImage());
-                pStmnt.setBoolean(5, p.isActive());
+                pStmnt.setString(5, p.getCategory());
+                pStmnt.setBoolean(6, p.isActive());
 
                 /*
                  * execute update query to add record into the data table

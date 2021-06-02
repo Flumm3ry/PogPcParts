@@ -6,6 +6,7 @@
 package session;
 
 import entity.ProductDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -17,9 +18,9 @@ public interface ProductFacadeRemote {
 
     ProductDTO getProductById(int productId);
 
-    ProductDTO[] getActiveProducts(boolean priceAscending, String category);
+    List<ProductDTO> searchProducts(String searchTerm, boolean priceAscending, String category);
 
-    ProductDTO[] searchProducts(String searchTerm);
+    List<ProductDTO> adminSearchProducts(String searchTerm, boolean priceAscending, String category);
 
     boolean addProduct(ProductDTO productDto);
 

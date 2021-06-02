@@ -17,14 +17,21 @@ public class Product implements Serializable {
     private final String description;
     private final float price;
     private final String image;
+    private final String category;
     private final boolean active;
 
-    public Product(int productId, String name, String description, float price, String image, boolean active) {
+    public String getCategory() {
+        return category;
+    }
+    
+
+    public Product(int productId, String name, String description, float price, String image, String category, boolean active) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.image = image;
         this.active = active;
+        this.category = category;
     }
 
     public String getName() {

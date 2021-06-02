@@ -12,7 +12,8 @@ import entity.Product;
 import entity.ProductOrder;
 import entity.User;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,6 +42,14 @@ public class OrderFacade implements OrderFacadeRemote {
 
     private Product getProductById(int productId) {
         return em.find(Product.class, productId);
+    }
+    
+    private List<PppOrder> findAllByUserId(int userId) {
+        User user = em.find(User.class, userId);
+        
+        if (user == null) return new ArrayList();
+        
+        return user.getPppOrderCollection().stream().collect(Collectors.toList());
     }
 
     private OrderDTO DAO2DTO(PppOrder order) {
@@ -89,7 +98,10 @@ public class OrderFacade implements OrderFacadeRemote {
     }
 
     @Override
-    public OrderDTO[] getOrdersByUserId(int userId) {
-        return null;
+    public List<OrderDTO> getOrdersByUserId(int userId) {
+        return findAllByUserId(userId)
+            .stream()
+            .map(o -> DAO2DTO(o))
+            .collect(Collectors.toList());
     }
 }

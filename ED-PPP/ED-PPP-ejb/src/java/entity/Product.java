@@ -41,6 +41,12 @@ public class Product implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "CATEGORY")
+    private String category;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "PRICE")
     private double price;
 
@@ -152,6 +158,14 @@ public class Product implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
     
 }

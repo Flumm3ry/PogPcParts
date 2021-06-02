@@ -10,6 +10,8 @@ import entity.UserDTO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +39,12 @@ public class UserFacade implements UserFacadeRemote {
         return em.find(User.class, id);
     }
     
+    private User findByEmail(String email) {
+        return em.createNamedQuery("Users.findByEmail", User.class)
+            .setParameter("email", email)
+            .getResultList().get(0);
+    }
+    
     private User DTO2DAO(UserDTO userDto) {
         if (userDto == null) return null;
         
@@ -60,6 +68,8 @@ public class UserFacade implements UserFacadeRemote {
     }
     
     private String encryptPassword(String password){
+        if (password == null) return null;
+        
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -76,7 +86,7 @@ public class UserFacade implements UserFacadeRemote {
 
     @Override
     public UserDTO getUserByEmail(String email) {
-        return null;
+        return DAO2DTO(findByEmail(email));
     }
 
     @Override
@@ -111,13 +121,24 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
-    public UserDTO[] searchUsers(String searchTerm) {
-        return null;
+    public List<UserDTO> searchUsers(String searchTerm) {
+        if (searchTerm == null) searchTerm = "";
+        searchTerm = "%" + searchTerm + "%";
+        
+        return em.createQuery(
+            "SELECT u FROM Users u WHERE u.name LIKE :searchTerm OR u.email LIKE :searchTerm", User.class)
+            .setParameter("searchTerm", searchTerm)
+            .getResultList()
+            .stream()
+            .map(u -> DAO2DTO(u))
+            .collect(Collectors.toList());
     }
 
     @Override
     public boolean adminUpdateUser(UserDTO userDto) {
         if (userDto == null || find(userDto.getUserId()) == null) return false;
+        
+        userDto.setPassword(encryptPassword(userDto.getPassword()));
         
         edit(DTO2DAO(userDto));
         
@@ -130,6 +151,7 @@ public class UserFacade implements UserFacadeRemote {
         
         userDto.setActive(true);
         userDto.setAppGroup("ppp-user");
+        userDto.setPassword(encryptPassword(userDto.getPassword()));
         
         create(DTO2DAO(userDto));
         

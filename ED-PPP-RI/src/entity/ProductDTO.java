@@ -16,14 +16,24 @@ public class ProductDTO {
     private String image;
     private boolean active;
     private double price;
+    private String category;
 
-    public ProductDTO(int productId, String name, String description, String image, boolean active, double price) {
+    public ProductDTO(int productId, String name, String description, String image, boolean active, double price, String category) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.image = image;
         this.active = active;
         this.price = price;
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public double getPrice() {
