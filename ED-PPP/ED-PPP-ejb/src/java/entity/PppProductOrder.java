@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "PPP_PRODUCT_ORDER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ProductOrder.findAll", query = "SELECT p FROM ProductOrder p")
-    , @NamedQuery(name = "ProductOrder.findByOrderproductid", query = "SELECT p FROM ProductOrder p WHERE p.orderproductid = :orderproductid")
-    , @NamedQuery(name = "ProductOrder.findByQuantity", query = "SELECT p FROM ProductOrder p WHERE p.quantity = :quantity")})
-public class ProductOrder implements Serializable {
+    @NamedQuery(name = "PppProductOrder.findAll", query = "SELECT p FROM PppProductOrder p")
+    , @NamedQuery(name = "PppProductOrder.findByOrderproductid", query = "SELECT p FROM PppProductOrder p WHERE p.orderproductid = :orderproductid")
+    , @NamedQuery(name = "PppProductOrder.findByQuantity", query = "SELECT p FROM PppProductOrder p WHERE p.quantity = :quantity")})
+public class PppProductOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,15 +42,15 @@ public class ProductOrder implements Serializable {
     private Integer quantity;
     @JoinColumn(name = "ORDERID", referencedColumnName = "ORDERID")
     @ManyToOne
-    private PppOrder orderid;
+    private PppOrders orderid;
     @JoinColumn(name = "PRODUCTID", referencedColumnName = "PRODUCTID")
     @ManyToOne
-    private Product productid;
+    private PppProducts productid;
 
-    public ProductOrder() {
+    public PppProductOrder() {
     }
 
-    public ProductOrder(Integer orderproductid) {
+    public PppProductOrder(Integer orderproductid) {
         this.orderproductid = orderproductid;
     }
 
@@ -70,19 +70,19 @@ public class ProductOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public PppOrder getOrderid() {
+    public PppOrders getOrderid() {
         return orderid;
     }
 
-    public void setOrderid(PppOrder orderid) {
+    public void setOrderid(PppOrders orderid) {
         this.orderid = orderid;
     }
 
-    public Product getProductid() {
+    public PppProducts getProductid() {
         return productid;
     }
 
-    public void setProductid(Product productid) {
+    public void setProductid(PppProducts productid) {
         this.productid = productid;
     }
 
@@ -96,10 +96,10 @@ public class ProductOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductOrder)) {
+        if (!(object instanceof PppProductOrder)) {
             return false;
         }
-        ProductOrder other = (ProductOrder) object;
+        PppProductOrder other = (PppProductOrder) object;
         if ((this.orderproductid == null && other.orderproductid != null) || (this.orderproductid != null && !this.orderproductid.equals(other.orderproductid))) {
             return false;
         }
@@ -108,7 +108,7 @@ public class ProductOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.ProductOrder[ orderproductid=" + orderproductid + " ]";
+        return "entity.PppProductOrder[ orderproductid=" + orderproductid + " ]";
     }
     
 }

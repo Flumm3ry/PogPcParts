@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -30,19 +31,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "PPP_USERS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
-    , @NamedQuery(name = "Users.findByUserid", query = "SELECT u FROM Users u WHERE u.userid = :userid")
-    , @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name")
-    , @NamedQuery(name = "Users.findByPhone", query = "SELECT u FROM Users u WHERE u.phone = :phone")
-    , @NamedQuery(name = "Users.findByAddress", query = "SELECT u FROM Users u WHERE u.address = :address")
-    , @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")
-    , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")
-    , @NamedQuery(name = "Users.findByAppgroup", query = "SELECT u FROM Users u WHERE u.appgroup = :appgroup")
-    , @NamedQuery(name = "Users.findByActive", query = "SELECT u FROM Users u WHERE u.active = :active")})
-public class User implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private Collection<PppOrder> pppOrderCollection;
+    @NamedQuery(name = "PppUsers.findAll", query = "SELECT p FROM PppUsers p")
+    , @NamedQuery(name = "PppUsers.findByUserid", query = "SELECT p FROM PppUsers p WHERE p.userid = :userid")
+    , @NamedQuery(name = "PppUsers.findByName", query = "SELECT p FROM PppUsers p WHERE p.name = :name")
+    , @NamedQuery(name = "PppUsers.findByPhone", query = "SELECT p FROM PppUsers p WHERE p.phone = :phone")
+    , @NamedQuery(name = "PppUsers.findByAddress", query = "SELECT p FROM PppUsers p WHERE p.address = :address")
+    , @NamedQuery(name = "PppUsers.findByEmail", query = "SELECT p FROM PppUsers p WHERE p.email = :email")
+    , @NamedQuery(name = "PppUsers.findByPassword", query = "SELECT p FROM PppUsers p WHERE p.password = :password")
+    , @NamedQuery(name = "PppUsers.findByAppgroup", query = "SELECT p FROM PppUsers p WHERE p.appgroup = :appgroup")
+    , @NamedQuery(name = "PppUsers.findByActive", query = "SELECT p FROM PppUsers p WHERE p.active = :active")})
+public class PppUsers implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,34 +48,61 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "USERID")
     private Integer userid;
-    @Size(max = 25)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "NAME")
     private String name;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 10)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
     @Column(name = "PHONE")
     private String phone;
-    @Size(max = 30)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
     @Column(name = "ADDRESS")
     private String address;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 30)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
     @Column(name = "EMAIL")
     private String email;
-    @Size(max = 120)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 120)
     @Column(name = "PASSWORD")
     private String password;
-    @Size(max = 12)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 12)
     @Column(name = "APPGROUP")
     private String appgroup;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ACTIVE")
     private Boolean active;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+    private Collection<PppOrders> pppOrdersCollection;
 
-    public User() {
+    public PppUsers() {
     }
 
-    public User(Integer userid) {
+    public PppUsers(Integer userid) {
         this.userid = userid;
+    }
+
+    public PppUsers(Integer userid, String name, String phone, String address, String email, String password, String appgroup, Boolean active) {
+        this.userid = userid;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.appgroup = appgroup;
+        this.active = active;
     }
 
     public Integer getUserid() {
@@ -144,6 +169,15 @@ public class User implements Serializable {
         this.active = active;
     }
 
+    @XmlTransient
+    public Collection<PppOrders> getPppOrdersCollection() {
+        return pppOrdersCollection;
+    }
+
+    public void setPppOrdersCollection(Collection<PppOrders> pppOrdersCollection) {
+        this.pppOrdersCollection = pppOrdersCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -154,10 +188,10 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof PppUsers)) {
             return false;
         }
-        User other = (User) object;
+        PppUsers other = (PppUsers) object;
         if ((this.userid == null && other.userid != null) || (this.userid != null && !this.userid.equals(other.userid))) {
             return false;
         }
@@ -166,16 +200,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Users[ userid=" + userid + " ]";
-    }
-
-    @XmlTransient
-    public Collection<PppOrder> getPppOrderCollection() {
-        return pppOrderCollection;
-    }
-
-    public void setPppOrderCollection(Collection<PppOrder> pppOrderCollection) {
-        this.pppOrderCollection = pppOrderCollection;
+        return "entity.PppUsers[ userid=" + userid + " ]";
     }
     
 }

@@ -5,7 +5,7 @@
  */
 package session;
 
-import entity.User;
+import entity.PppUsers;
 import entity.UserDTO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -24,31 +24,34 @@ import javax.xml.bind.DatatypeConverter;
 @Stateless
 public class UserFacade implements UserFacadeRemote {
     
-    @PersistenceContext(unitName = "ED-PPP-ejbUSER")
+    @PersistenceContext
     private EntityManager em;
 
-    private void create(User entity) {
+    public UserFacade() {
+    }
+
+    private void create(PppUsers entity) {
         em.persist(entity);
     }
 
-    private void edit(User entity) {
+    private void edit(PppUsers entity) {
         em.merge(entity);
     }
     
-    private User find(int id) {
-        return em.find(User.class, id);
+    private PppUsers find(int id) {
+        return em.find(PppUsers.class, id);
     }
     
-    private User findByEmail(String email) {
-        return em.createNamedQuery("Users.findByEmail", User.class)
+    private PppUsers findByEmail(String email) {
+        return em.createNamedQuery("Users.findByEmail", PppUsers.class)
             .setParameter("email", email)
             .getResultList().get(0);
     }
     
-    private User DTO2DAO(UserDTO userDto) {
+    private PppUsers DTO2DAO(UserDTO userDto) {
         if (userDto == null) return null;
         
-        User user = new User();
+        PppUsers user = new PppUsers();
         user.setUserid(userDto.getUserId());
         user.setName(userDto.getName());
         user.setPhone(userDto.getPhone());
@@ -61,7 +64,7 @@ public class UserFacade implements UserFacadeRemote {
         return user;
     }
     
-    private UserDTO DAO2DTO(User user) {
+    private UserDTO DAO2DTO(PppUsers user) {
         if (user == null) return null;
         
         return new UserDTO(user.getUserid(), user.getName(), user.getPhone(), user.getAddress(), user.getEmail(), user.getPassword(), user.getAppgroup(), user.getActive());
@@ -93,7 +96,7 @@ public class UserFacade implements UserFacadeRemote {
     public boolean updateUser(UserDTO userDto) {
         if (userDto == null || find(userDto.getUserId()) == null) return false;
         
-        User user = DTO2DAO(userDto);
+        PppUsers user = DTO2DAO(userDto);
         user.setPassword(null);
         user.setAppgroup(null);
         user.setActive(null);
@@ -106,7 +109,7 @@ public class UserFacade implements UserFacadeRemote {
     @Override
     public boolean updatePassword(int userId, String oldPassword, String newPassword) {
         // find the employee
-        User user = find(userId);
+        PppUsers user = find(userId);
 
         // check again - just to play it safe
         if (user == null) {
@@ -126,7 +129,7 @@ public class UserFacade implements UserFacadeRemote {
         searchTerm = "%" + searchTerm + "%";
         
         return em.createQuery(
-            "SELECT u FROM Users u WHERE u.name LIKE :searchTerm OR u.email LIKE :searchTerm", User.class)
+            "SELECT u FROM Users u WHERE u.name LIKE :searchTerm OR u.email LIKE :searchTerm", PppUsers.class)
             .setParameter("searchTerm", searchTerm)
             .getResultList()
             .stream()
@@ -150,7 +153,7 @@ public class UserFacade implements UserFacadeRemote {
         if (userDto == null || find(userDto.getUserId()) != null) return false;
         
         userDto.setActive(true);
-        userDto.setAppGroup("ppp-user");
+        userDto.setAppGroup("USER");
         userDto.setPassword(encryptPassword(userDto.getPassword()));
         
         create(DTO2DAO(userDto));

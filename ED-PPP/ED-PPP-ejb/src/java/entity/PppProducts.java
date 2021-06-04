@@ -30,25 +30,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "PPP_PRODUCTS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Products p")
-    , @NamedQuery(name = "Products.findByProductid", query = "SELECT p FROM Products p WHERE p.productid = :productid")
-    , @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name")
-    , @NamedQuery(name = "Products.findByDescription", query = "SELECT p FROM Products p WHERE p.description = :description")
-    , @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price")
-    , @NamedQuery(name = "Products.findByImage", query = "SELECT p FROM Products p WHERE p.image = :image")
-    , @NamedQuery(name = "Products.findByActive", query = "SELECT p FROM Products p WHERE p.active = :active")})
-public class Product implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "CATEGORY")
-    private String category;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PRICE")
-    private double price;
+    @NamedQuery(name = "PppProducts.findAll", query = "SELECT p FROM PppProducts p")
+    , @NamedQuery(name = "PppProducts.findByProductid", query = "SELECT p FROM PppProducts p WHERE p.productid = :productid")
+    , @NamedQuery(name = "PppProducts.findByName", query = "SELECT p FROM PppProducts p WHERE p.name = :name")
+    , @NamedQuery(name = "PppProducts.findByDescription", query = "SELECT p FROM PppProducts p WHERE p.description = :description")
+    , @NamedQuery(name = "PppProducts.findByPrice", query = "SELECT p FROM PppProducts p WHERE p.price = :price")
+    , @NamedQuery(name = "PppProducts.findByImage", query = "SELECT p FROM PppProducts p WHERE p.image = :image")
+    , @NamedQuery(name = "PppProducts.findByCategory", query = "SELECT p FROM PppProducts p WHERE p.category = :category")
+    , @NamedQuery(name = "PppProducts.findByActive", query = "SELECT p FROM PppProducts p WHERE p.active = :active")})
+public class PppProducts implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,25 +46,52 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(name = "PRODUCTID")
     private Integer productid;
-    @Size(max = 25)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "NAME")
     private String name;
-    @Size(max = 10)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
     @Column(name = "DESCRIPTION")
     private String description;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRICE")
+    private double price;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "IMAGE")
     private String image;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "CATEGORY")
+    private String category;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ACTIVE")
     private Boolean active;
     @OneToMany(mappedBy = "productid")
-    private Collection<ProductOrder> productOrderCollection;
+    private Collection<PppProductOrder> pppProductOrderCollection;
 
-    public Product() {
+    public PppProducts() {
     }
 
-    public Product(Integer productid) {
+    public PppProducts(Integer productid) {
         this.productid = productid;
+    }
+
+    public PppProducts(Integer productid, String name, String description, double price, String image, String category, Boolean active) {
+        this.productid = productid;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.image = image;
+        this.category = category;
+        this.active = active;
     }
 
     public Integer getProductid() {
@@ -101,6 +118,13 @@ public class Product implements Serializable {
         this.description = description;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public String getImage() {
         return image;
@@ -108,6 +132,14 @@ public class Product implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Boolean getActive() {
@@ -119,12 +151,12 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public Collection<ProductOrder> getProductOrderCollection() {
-        return productOrderCollection;
+    public Collection<PppProductOrder> getPppProductOrderCollection() {
+        return pppProductOrderCollection;
     }
 
-    public void setProductOrderCollection(Collection<ProductOrder> productOrderCollection) {
-        this.productOrderCollection = productOrderCollection;
+    public void setPppProductOrderCollection(Collection<PppProductOrder> pppProductOrderCollection) {
+        this.pppProductOrderCollection = pppProductOrderCollection;
     }
 
     @Override
@@ -137,10 +169,10 @@ public class Product implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Product)) {
+        if (!(object instanceof PppProducts)) {
             return false;
         }
-        Product other = (Product) object;
+        PppProducts other = (PppProducts) object;
         if ((this.productid == null && other.productid != null) || (this.productid != null && !this.productid.equals(other.productid))) {
             return false;
         }
@@ -149,23 +181,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Products[ productid=" + productid + " ]";
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+        return "entity.PppProducts[ productid=" + productid + " ]";
     }
     
 }

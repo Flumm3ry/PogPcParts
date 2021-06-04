@@ -5,10 +5,8 @@
  */
 package session;
 
-import com.sun.xml.ws.util.StringUtils;
-import entity.Product;
+import entity.PppProducts;
 import entity.ProductDTO;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,25 +21,28 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ProductFacade implements ProductFacadeRemote {
     
-    @PersistenceContext(unitName = "ED-PPP-ejbPRODUCT")
+    @PersistenceContext
     private EntityManager em;
 
-    private void create(Product entity) {
+    public ProductFacade() {
+    }
+
+    private void create(PppProducts entity) {
         em.persist(entity);
     }
 
-    private void edit(Product entity) {
+    private void edit(PppProducts entity) {
         em.merge(entity);
     }
     
-    private Product find(int id) {
-        return em.find(Product.class, id);
+    private PppProducts find(int id) {
+        return em.find(PppProducts.class, id);
     }
     
-    private Product DTO2DAO(ProductDTO productDto) {
+    private PppProducts DTO2DAO(ProductDTO productDto) {
         if (productDto == null) return null;
         
-        Product product = new Product();
+        PppProducts product = new PppProducts();
         product.setProductid(productDto.getProductId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
@@ -53,19 +54,19 @@ public class ProductFacade implements ProductFacadeRemote {
         return product;
     }
     
-    private ProductDTO DAO2DTO(Product product) {
+    private ProductDTO DAO2DTO(PppProducts product) {
         if (product == null) return null;
         
         return new ProductDTO(product.getProductid(), product.getName(), product.getDescription(), product.getImage(), product.getActive(), product.getPrice(), product.getCategory());
     }
     
-    private List<Product> getSearchedProducts(String searchTerm, String category) {
+    private List<PppProducts> getSearchedProducts(String searchTerm, String category) {
         if (category == null) category = "";
         if (searchTerm == null) searchTerm = "";
         category = "%" + category + "%";
         searchTerm = "%" + searchTerm + "%";
         
-        return em.createQuery("SELECT p FROM Products p WHERE p.name LIKE :searchTerm AND p.category LIKE :category", Product.class)
+        return em.createQuery("SELECT p FROM Products p WHERE p.name LIKE :searchTerm AND p.category LIKE :category", PppProducts.class)
                 .setParameter("searchTerm", searchTerm)
                 .setParameter("category", category)
                 .getResultList();
@@ -82,7 +83,7 @@ public class ProductFacade implements ProductFacadeRemote {
         return getSearchedProducts(searchTerm, category)
                 .stream()
                 .filter(p -> p.getActive())
-                .sorted(priceAscending ? Comparator.comparingDouble(Product::getPrice) : Comparator.comparingDouble(Product::getPrice).reversed())
+                .sorted(priceAscending ? Comparator.comparingDouble(PppProducts::getPrice) : Comparator.comparingDouble(PppProducts::getPrice).reversed())
                 .map(p -> DAO2DTO(p))
                 .collect(Collectors.toList());
     }
@@ -91,7 +92,7 @@ public class ProductFacade implements ProductFacadeRemote {
     public List<ProductDTO> adminSearchProducts(String searchTerm, boolean priceAscending, String category) {
         return getSearchedProducts(searchTerm, category)
                 .stream()
-                .sorted(priceAscending ? Comparator.comparingDouble(Product::getPrice) : Comparator.comparingDouble(Product::getPrice).reversed())
+                .sorted(priceAscending ? Comparator.comparingDouble(PppProducts::getPrice) : Comparator.comparingDouble(PppProducts::getPrice).reversed())
                 .map(p -> DAO2DTO(p))
                 .collect(Collectors.toList());
     }

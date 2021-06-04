@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,14 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "PPP_ORDERS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")
-    , @NamedQuery(name = "Orders.findByOrderid", query = "SELECT o FROM Orders o WHERE o.orderid = :orderid")
-    , @NamedQuery(name = "Orders.findByDate", query = "SELECT o FROM Orders o WHERE o.date = :date")})
-public class PppOrder implements Serializable {
-
-    @JoinColumn(name = "USERID", referencedColumnName = "USERID")
-    @ManyToOne(optional = false)
-    private User userid;
+    @NamedQuery(name = "PppOrders.findAll", query = "SELECT p FROM PppOrders p")
+    , @NamedQuery(name = "PppOrders.findByOrderid", query = "SELECT p FROM PppOrders p WHERE p.orderid = :orderid")
+    , @NamedQuery(name = "PppOrders.findByDate", query = "SELECT p FROM PppOrders p WHERE p.date = :date")})
+public class PppOrders implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,17 +45,27 @@ public class PppOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "ORDERID")
     private Integer orderid;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @JoinColumn(name = "USERID", referencedColumnName = "USERID")
+    @ManyToOne(optional = false)
+    private PppUsers userid;
     @OneToMany(mappedBy = "orderid")
-    private Collection<ProductOrder> productOrderCollection;
+    private Collection<PppProductOrder> pppProductOrderCollection;
 
-    public PppOrder() {
+    public PppOrders() {
     }
 
-    public PppOrder(Integer orderid) {
+    public PppOrders(Integer orderid) {
         this.orderid = orderid;
+    }
+
+    public PppOrders(Integer orderid, Date date) {
+        this.orderid = orderid;
+        this.date = date;
     }
 
     public Integer getOrderid() {
@@ -77,13 +84,21 @@ public class PppOrder implements Serializable {
         this.date = date;
     }
 
-    @XmlTransient
-    public Collection<ProductOrder> getProductOrderCollection() {
-        return productOrderCollection;
+    public PppUsers getUserid() {
+        return userid;
     }
 
-    public void setProductOrderCollection(Collection<ProductOrder> productOrderCollection) {
-        this.productOrderCollection = productOrderCollection;
+    public void setUserid(PppUsers userid) {
+        this.userid = userid;
+    }
+
+    @XmlTransient
+    public Collection<PppProductOrder> getPppProductOrderCollection() {
+        return pppProductOrderCollection;
+    }
+
+    public void setPppProductOrderCollection(Collection<PppProductOrder> pppProductOrderCollection) {
+        this.pppProductOrderCollection = pppProductOrderCollection;
     }
 
     @Override
@@ -96,10 +111,10 @@ public class PppOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PppOrder)) {
+        if (!(object instanceof PppOrders)) {
             return false;
         }
-        PppOrder other = (PppOrder) object;
+        PppOrders other = (PppOrders) object;
         if ((this.orderid == null && other.orderid != null) || (this.orderid != null && !this.orderid.equals(other.orderid))) {
             return false;
         }
@@ -108,15 +123,7 @@ public class PppOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Orders[ orderid=" + orderid + " ]";
-    }
-
-    public User getUserid() {
-        return userid;
-    }
-
-    public void setUserid(User userid) {
-        this.userid = userid;
+        return "entity.PppOrders[ orderid=" + orderid + " ]";
     }
     
 }
