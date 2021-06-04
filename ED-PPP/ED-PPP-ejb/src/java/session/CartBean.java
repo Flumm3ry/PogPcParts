@@ -51,10 +51,10 @@ public class CartBean implements CartBeanRemote {
     }
 
     @Override
-    public boolean removeCartItem(CartItemDTO cartItemDto) {
+    public boolean removeCartItem(int productId) {
         try {
             // will return true if any items were deleted
-            return cart.removeIf(ci -> ci.getProductId() == cartItemDto.getProductId());
+            return cart.removeIf(ci -> ci.getProductId() == productId);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

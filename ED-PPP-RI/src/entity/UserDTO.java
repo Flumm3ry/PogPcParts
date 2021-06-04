@@ -10,7 +10,7 @@ package entity;
  * @author jerem
  */
 public class UserDTO {
-    private int userId;
+    private Integer userId;
     private String name;
     private String phone;
     private String address;
@@ -19,7 +19,7 @@ public class UserDTO {
     private String appGroup;
     private boolean active;
 
-    public UserDTO(int userId, String name, String phone, String address, String email, String password, String appGroup, boolean active) {
+    public UserDTO(Integer userId, String name, String phone, String address, String email, String password, String appGroup, boolean active) {
         this.userId = userId;
         this.name = name;
         this.phone = phone;
@@ -30,11 +30,11 @@ public class UserDTO {
         this.active = active;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

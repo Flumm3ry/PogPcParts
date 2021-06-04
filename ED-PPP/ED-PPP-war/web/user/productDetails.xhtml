@@ -6,7 +6,46 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Name:"/>
+                        </td>
+                        <td>
+                            <h:inputText title="Search" id="searchTerm"
+                                         maxlength="25"
+                                         value="#{myProductManagedBean.searchTerm}"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </h:form>
+        <table>
+            <tbody>
+                    <tr>
+                        <td>
+                            #{myProductManagedBean.name}
+                        </td>
+                        <td>
+                            #{myProductManagedBean.image}
+                        </td>
+                        <td>
+                            #{myProductManagedBean.price}
+                        </td>
+                        <td>
+                            #{myProductManagedBean.description}
+                        </td>
+                        <td>
+                            #{myProductManagedBean.quantity}
+                        </td>
+                        <td>
+                            #{myProductManagedBean.name}
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
     </h:body>
 </html>
 

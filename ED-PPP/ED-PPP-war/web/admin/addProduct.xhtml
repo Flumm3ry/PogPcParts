@@ -1,12 +1,100 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Add new product</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Name:"/>
+                        </td>
+                        <td>
+                            <h:inputText title="Name" id="name"
+                                         maxlength="25"
+                                         required="true" 
+                                         requiredMessage="Name is required"
+                                         value="#{myProductManagedBean.name}"/>
+                        </td>
+                        <td>
+                            <h:message for="name" style="color:red"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Description:"/>
+                        </td>
+                        <td>
+                            <h:inputText title="Description" maxlength="100"
+                                         required="true"
+                                         value="#{myProductManagedBean.description}"/>     
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Price:"/>
+                        </td>
+                        <td>
+                            <h:inputText title="Price" maxlength="30" 
+                                         required="true"
+                                         value="#{myProductManagedBean.price}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Category:"/>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="category"
+                                             required="true"
+                                             value="#{myProductManagedBean.category}">
+                                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="User Group:"/>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="image"
+                                             required="true"
+                                             value="#{myProductManagedBean.image}">
+                                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Active:" for="active"/> 
+                        </td>
+                        <td>
+                            <h:selectBooleanCheckbox id="active" 
+                                                     required="false" 
+                                                     value="#{myUserManagedBean.active}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p></p>
+
+            <h:commandButton id="submit" value="Submit" 
+                             action="#{myUserBean.addProduct()}"/>
+        </h:form>
     </h:body>
 </html>
 

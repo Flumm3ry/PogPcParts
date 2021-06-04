@@ -5,21 +5,21 @@
  */
 package entity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author jerem
  */
 public class OrderDTO {
-    private int orderId;
-    private int userId;
+    private Integer orderId;
+    private Integer userId;
     private Date orderDate;
-    private ArrayList<CartItemDTO> items = new ArrayList<>();
+    private List<CartItemDTO> items = new ArrayList<>();
 
-    public OrderDTO(int orderId, int userId, Date orderDate, ArrayList<CartItemDTO> items) {
+    public OrderDTO(Integer orderId, Integer userId, Date orderDate, List<CartItemDTO> items) {
         this.orderId = orderId;
         this.userId = userId;
         this.orderDate = orderDate;
@@ -34,27 +34,27 @@ public class OrderDTO {
         this.orderDate = orderDate;
     }
 
-    public ArrayList<CartItemDTO> getItems() {
+    public List<CartItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<CartItemDTO> items) {
+    public void setItems(List<CartItemDTO> items) {
         this.items = items;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 }

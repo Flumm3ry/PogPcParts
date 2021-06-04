@@ -10,7 +10,7 @@ package entity;
  * @author jerem
  */
 public class ProductDTO {
-    private int productId;
+    private Integer productId;
     private String name;
     private String description;
     private String image;
@@ -18,7 +18,7 @@ public class ProductDTO {
     private double price;
     private String category;
 
-    public ProductDTO(int productId, String name, String description, String image, boolean active, double price, String category) {
+    public ProductDTO(Integer productId, String name, String description, String image, boolean active, double price, String category) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -44,11 +44,11 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 

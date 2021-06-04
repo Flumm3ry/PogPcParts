@@ -18,7 +18,7 @@ public interface CartBeanRemote {
 
     boolean addCartItem(CartItemDTO cartItemDto);
 
-    boolean removeCartItem(CartItemDTO cartItemDto);
+    boolean removeCartItem(int productId);
 
     List<CartItemDTO> getCart();
 
