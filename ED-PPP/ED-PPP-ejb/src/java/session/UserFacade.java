@@ -150,7 +150,7 @@ public class UserFacade implements UserFacadeRemote {
 
     @Override
     public boolean addUser(UserDTO userDto) {
-        if (userDto == null || find(userDto.getUserId()) != null) return false;
+        if (userDto == null || userDto.getUserId() != null) return false;
         
         userDto.setActive(true);
         userDto.setAppGroup("USER");

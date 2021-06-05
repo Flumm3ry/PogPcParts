@@ -26,19 +26,27 @@ public class SetupDB {
     }
 
     public void clearAllDbs() {
-        UserDB userDb = new UserDB();
-
-        // make sure no name conflicts
-        try {
-            userDb.destroyDBTable();
-        } catch (Exception ex) {
-        }
-
         OrderProductDB orderProductDb = new OrderProductDB();
 
         // make sure no name conflicts
         try {
             orderProductDb.destroyDBTable();
+        } catch (Exception ex) {
+        }
+        
+        OrderDB orderDb = new OrderDB();
+
+        // make sure no name conflicts
+        try {
+            orderDb.destroyDBTable();
+        } catch (Exception ex) {
+        }
+        
+        UserDB userDb = new UserDB();
+
+        // make sure no name conflicts
+        try {
+            userDb.destroyDBTable();
         } catch (Exception ex) {
         }
 
@@ -48,14 +56,6 @@ public class SetupDB {
         // make sure no name conflicts
         try {
             productDb.destroyDBTable();
-        } catch (Exception ex) {
-        }
-
-        OrderDB orderDb = new OrderDB();
-
-        // make sure no name conflicts
-        try {
-            orderDb.destroyDBTable();
         } catch (Exception ex) {
         }
     }

@@ -34,7 +34,7 @@ public class MyLoginManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
         try {
             request.logout();
-            if (request.isUserInRole("ED-APP-ADMIN")) {
+            if (request.isUserInRole("ADMIN")) {
                 System.out.println("Yes, user is in ED-APP-ADMIN role");
             }
         } catch (Exception ex) {

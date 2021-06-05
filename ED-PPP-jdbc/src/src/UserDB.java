@@ -71,11 +71,11 @@ public class UserDB {
             stmnt.execute("CREATE TABLE " + DB_TABLE
                     + " (UserId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
                     + " Name VARCHAR(25) NOT NULL,"
-                    + " Phone CHAR(10) NOT NULL,"
+                    + " Phone VARCHAR(10) NOT NULL,"
                     + " Address VARCHAR(30) NOT NULL,"
                     + " Email VARCHAR(30) NOT NULL,"
-                    + " Password CHAR(120) NOT NULL,"
-                    + " AppGroup CHAR(12) NOT NULL,"
+                    + " Password VARCHAR(120) NOT NULL,"
+                    + " AppGroup VARCHAR(12) NOT NULL,"
                     + " Active BOOLEAN NOT NULL)");
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -123,8 +123,10 @@ public class UserDB {
 
             // execute action query to destroy a data table
             stmnt.execute("DROP TABLE " + DB_TABLE);
+            
+            System.out.println("Dropped table " + DB_TABLE);
         } catch (SQLException | IOException ex) {
-            // do nothing
+            ex.printStackTrace();
         } // do nothing
         finally {
             // close Statement object

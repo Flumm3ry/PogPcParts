@@ -6,6 +6,7 @@
         <title>Register</title>
     </h:head>
     <h:body>
+        <h1>Register</h1>
         <h:form>
             <table>
                 <tbody>
@@ -56,7 +57,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <h:outputLabel value="Password"/>
+                            <h:outputLabel value="Password:"/>
                         </td>
                         <td>
                             <h:inputSecret title="Password"
@@ -71,7 +72,7 @@
             <p></p>
 
             <h:commandButton id="submit" value="Submit" 
-                             action="#{myUserBean.register()}"/>
+                             action="#{myUserManagedBean.addUser()}"/>
 
         </h:form>
     </h:body>
