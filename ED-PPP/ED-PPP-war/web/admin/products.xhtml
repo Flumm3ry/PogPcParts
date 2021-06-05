@@ -2,26 +2,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Admin Product Search</title>
     </h:head>
     <h:body>
         <h:form>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Name:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Search" id="searchTerm"
-                                         maxlength="25"
-                                         value="#{myProductManagedBean.searchTerm}"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <h:outputLabel value="Name:"/>
+
+            <h:inputText title="Search" id="searchTerm"
+                         maxlength="25"
+                         value="#{myProductManagedBean.searchTerm}"/>
+
+            <h:outputLabel value="Category:"/>
+            <h:selectOneMenu id="category"
+                             required="false"
+                             value="#{myProductManagedBean.filterCategory}">
+                <f:selectItem itemValue="" itemLabel="All"></f:selectItem>
+                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+            </h:selectOneMenu>
+
+            <h:outputLabel value="Price Ascending:"/>
+            <h:selectBooleanCheckbox id="priceAscending" 
+                                     required="false" 
+                                     value="#{myProductManagedBean.isAscending}" />
+
+            <h:commandButton id="submit" value="Submit" 
+                             action="#{myProductManagedBean.adminSearchProducts()}"/>
         </h:form>
         <table>
             <tbody>
@@ -40,8 +52,14 @@
                             #{p.price}
                         </td>
                         <td>
-                            #{p.name}
+                            #{p.category}
                         </td>
+                        <h:form>
+                            <td>
+                                <h:commandButton id="submit" value="Submit" 
+                                                 action="#{myProductManagedBean.getProduct(p.productId)}"/>
+                            </td>
+                        </h:form>
                     </tr>
                 </ui:repeat>>
             </tbody>

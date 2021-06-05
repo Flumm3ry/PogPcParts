@@ -19,9 +19,14 @@
                                          maxlength="25"
                                          value="#{myUserManagedBean.searchTerm}"/>
                         </td>
+                        <td>
+                            <h:commandButton id="submit" value="Submit" 
+                                             action="#{myUserManagedBean.searchUsers()}"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <h3>Results</h3>
         </h:form>
         <table>
             <tbody>
@@ -43,11 +48,17 @@
                             #{u.phone}
                         </td>
                         <td>
-                            #{u.appgroup}
+                            #{u.appGroup}
                         </td>
                         <td>
                             #{u.active}
                         </td>
+                        <h:form>
+                            <td>
+                                <h:commandButton id="submit" value="Submit" 
+                                                 action="#{MyUserManagedBean.getUser(u.userId)}"/>
+                            </td>
+                        </h:form>
                     </tr>
                 </ui:repeat>>
             </tbody>

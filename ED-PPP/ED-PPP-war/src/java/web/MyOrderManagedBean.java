@@ -35,25 +35,15 @@ public class MyOrderManagedBean implements Serializable {
     private CartBeanRemote cartBean;
 
     private List<CartItemDTO> cartItemList;
-    private int productId;
-    private String productName;
     private int quantity;
     private List<OrderDTO> orderList;
 
-    public int getProductId() {
-        return productId;
+    public List<OrderDTO> getOrderList() {
+        return orderList;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setOrderList(List<OrderDTO> orderList) {
+        this.orderList = orderList;
     }
 
     public int getQuantity() {
@@ -99,7 +89,7 @@ public class MyOrderManagedBean implements Serializable {
         return cartBean.removeCartItem(productId) ? "success" : "fail";
     }
     
-    public String addCartItem() {
+    public String addCartItem(int productId, String productName) {
         CartItemDTO cartItemDto = new CartItemDTO(productId, productName, quantity);
         
         return cartBean.addCartItem(cartItemDto) ? "success" : "fail";
@@ -115,7 +105,7 @@ public class MyOrderManagedBean implements Serializable {
         return "fail";
     }
     
-    public String getOrderList() {
+    public String getOrdersList() {
         String loggedInEmail = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         
         UserDTO userDto = userFacade.getUserByEmail(loggedInEmail);

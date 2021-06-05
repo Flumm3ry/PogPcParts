@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Update User</title>
     </h:head>
@@ -14,7 +15,7 @@
                             <h:outputLabel value="Employee Id:"/>
                         </td>
                         <td>
-                            <h:outputText value="#{myUserManagedBean.empId}"/>
+                            <h:outputText value="#{myUserManagedBean.userId}"/>
                         </td>
                     </tr>
                     <tr>
@@ -75,6 +76,19 @@
                     </tr>
                     <tr>
                         <td>
+                            <h:outputLabel value="App Group:"/>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="appgroup"
+                                             required="true"
+                                             value="#{myUserManagedBean.appGroup}">
+                                <f:selectItem itemValue="USER" itemLabel="USER"></f:selectItem>                                
+                                <f:selectItem itemValue="ADMIN" itemLabel="ADMIN"></f:selectItem>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <h:outputLabel value="Active:" for="active"/> 
                         </td>
                         <td>
@@ -89,7 +103,7 @@
             <p></p>
 
             <h:commandButton id="submit" value="Submit" 
-                             action="#{myUserBean.updateMyDetails()}"/>
+                             action="#{myUserManagedBean.adminUpdateUser()}"/>
 
         </h:form>
     </h:body>

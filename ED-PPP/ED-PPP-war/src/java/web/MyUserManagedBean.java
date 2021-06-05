@@ -32,8 +32,46 @@ public class MyUserManagedBean implements Serializable{
     private String email;
     private String password;
     
+    private String oldPassword;
+    private String newPassword;
+    private String confirmPassword;
+    
     private String searchTerm;
     private List<UserDTO> userList;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
+    
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
     
     public List<UserDTO> getUserList() {
         return userList;
@@ -91,14 +129,6 @@ public class MyUserManagedBean implements Serializable{
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getAppGroup() {
         return appGroup;
     }
@@ -129,10 +159,16 @@ public class MyUserManagedBean implements Serializable{
         return userFacade.addUser(userDto) ? "success" : "fail";
     }
     
-    public String updateProduct() {
+    public String updateUser() {
         UserDTO userDto = new UserDTO(userId, name, phone, address, email, password, appGroup, active);
         
         return userFacade.updateUser(userDto) ? "success" : "fail";
+    }
+    
+    public String adminUpdateUser() {
+        UserDTO userDto = new UserDTO(userId, name, phone, address, email, password, appGroup, active);
+        
+        return userFacade.adminUpdateUser(userDto) ? "success" : "fail";
     }
     
     public String searchUsers() {
@@ -173,5 +209,15 @@ public class MyUserManagedBean implements Serializable{
         email = userDto.getEmail();
         
         return "success";
+    }
+    
+    public String changePassword() {
+        String loggedInEmail = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        
+        UserDTO userDto = userFacade.getUserByEmail(loggedInEmail);
+        
+        if (userDto == null) return "fail";
+        
+        return userFacade.updatePassword(userDto.getUserId(), oldPassword, newPassword) ? "success" : "fail";
     }
 }

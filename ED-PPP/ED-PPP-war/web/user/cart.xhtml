@@ -1,12 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>My Cart</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <table>
+            <tbody>
+                <ui:repeat var="c" value="#{myOrderManagedBean.cartItemList}">
+                    <tr>
+                        <td>
+                            #{c.productId}
+                        </td>
+                        <td>
+                            #{c.productName}
+                        </td>
+                        <td>
+                            #{c.quantity}
+                        </td>
+                        <td>
+                            <h:commandButton id="submit" value="Remove" 
+                                             action="#{myOrderManagedBean.removeCartItem(p.productId)}"/>
+                        </td>
+                    </tr>
+                </ui:repeat>>
+            </tbody>
+        </table>
+        <h:form>
+            <h:commandButton id="submit" value="Checkout Cart" 
+                                             action="#{myOrderManagedBean.checkoutCart()}"/>
+        </h:form>
     </h:body>
 </html>
 

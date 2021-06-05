@@ -21,9 +21,6 @@
                                          requiredMessage="Name is required"
                                          value="#{myUserManagedBean.name}"/>
                         </td>
-                        <td>
-                            <h:message for="name" style="color:red"/>
-                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -60,7 +57,7 @@
 
             <p></p>
 
-            <h:commandButton id="submit" value="Submit" 
+            <h:commandButton id="updateUser" value="Update User" 
                              action="#{myUserBean.updateMyDetails()}"/>
 
         </h:form>

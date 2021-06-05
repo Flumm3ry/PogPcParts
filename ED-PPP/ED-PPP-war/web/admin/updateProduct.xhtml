@@ -84,7 +84,7 @@
                         <td>
                             <h:selectBooleanCheckbox id="active" 
                                                      required="false" 
-                                                     value="#{myUserManagedBean.active}" />
+                                                     value="#{myProductManagedBean.active}" />
                         </td>
                     </tr>
                 </tbody>
@@ -93,7 +93,7 @@
             <p></p>
 
             <h:commandButton id="submit" value="Submit" 
-                             action="#{myUserBean.updateProduct()}"/>
+                             action="#{myProductManagedBean.updateProduct()}"/>
         </h:form>
     </h:body>
 </html>
