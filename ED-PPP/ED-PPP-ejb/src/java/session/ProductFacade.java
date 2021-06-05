@@ -66,7 +66,7 @@ public class ProductFacade implements ProductFacadeRemote {
         category = "%" + category + "%";
         searchTerm = "%" + searchTerm + "%";
         
-        return em.createQuery("SELECT p FROM Products p WHERE p.name LIKE :searchTerm AND p.category LIKE :category", PppProducts.class)
+        return em.createQuery("SELECT p FROM PppProducts p WHERE p.name LIKE :searchTerm AND p.category LIKE :category", PppProducts.class)
                 .setParameter("searchTerm", searchTerm)
                 .setParameter("category", category)
                 .getResultList();
@@ -99,7 +99,8 @@ public class ProductFacade implements ProductFacadeRemote {
 
     @Override
     public boolean addProduct(ProductDTO productDto) {
-        if (productDto == null || find(productDto.getProductId()) != null) return false;
+        if (productDto == null) return false;
+        if (productDto.getProductId() != null) return false;
         
         create(DTO2DAO(productDto));
         

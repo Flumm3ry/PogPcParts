@@ -9,8 +9,9 @@ import entity.UserDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import session.UserFacadeRemote;
 
@@ -19,12 +20,13 @@ import session.UserFacadeRemote;
  * @author jerem
  */
 @Named(value = "myUserManagedBean")
-@SessionScoped
+@RequestScoped
+@ManagedBean
 public class MyUserManagedBean implements Serializable{
 
-    @EJB
+    @EJB(mappedName="ejb/UserFacadeRemote")
     private UserFacadeRemote userFacade;
-    
+
     private Integer userId;
     private String name;
     private String phone;

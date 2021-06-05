@@ -5,6 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>My Cart</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
         <table>
@@ -21,11 +22,13 @@
                             #{c.quantity}
                         </td>
                         <td>
-                            <h:commandButton id="submit" value="Remove" 
-                                             action="#{myOrderManagedBean.removeCartItem(p.productId)}"/>
+                            <h:form>
+                                <h:commandButton id="submit" value="Remove" 
+                                                 action="#{myOrderManagedBean.removeCartItem(p.productId)}"/>
+                            </h:form>
                         </td>
                     </tr>
-                </ui:repeat>>
+                </ui:repeat>
             </tbody>
         </table>
         <h:form>

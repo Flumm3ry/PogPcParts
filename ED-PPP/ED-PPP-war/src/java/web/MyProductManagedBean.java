@@ -7,10 +7,10 @@ package web;
 
 import entity.ProductDTO;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import session.ProductFacadeRemote;
 
 /**
@@ -18,7 +18,7 @@ import session.ProductFacadeRemote;
  * @author jerem
  */
 @Named(value = "myProductManagedBean")
-@SessionScoped
+@RequestScoped
 public class MyProductManagedBean implements Serializable {
 
     @EJB
@@ -148,6 +148,7 @@ public class MyProductManagedBean implements Serializable {
             setProductList(productFacade.searchProducts(searchTerm, isAscending, filterCategory));
             return "success";
         } catch (Exception e) {
+            e.printStackTrace();
         }
         
         return "fail";
@@ -158,6 +159,7 @@ public class MyProductManagedBean implements Serializable {
             setProductList(productFacade.adminSearchProducts(searchTerm, isAscending, filterCategory));
             return "success";
         } catch (Exception e) {
+            e.printStackTrace();
         }
         
         return "fail";

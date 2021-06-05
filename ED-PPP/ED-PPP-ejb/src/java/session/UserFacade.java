@@ -21,7 +21,7 @@ import javax.xml.bind.DatatypeConverter;
  *
  * @author jerem
  */
-@Stateless
+@Stateless(mappedName="ejb/UserFacadeRemote")
 public class UserFacade implements UserFacadeRemote {
     
     @PersistenceContext
@@ -43,7 +43,7 @@ public class UserFacade implements UserFacadeRemote {
     }
     
     private PppUsers findByEmail(String email) {
-        return em.createNamedQuery("Users.findByEmail", PppUsers.class)
+        return em.createNamedQuery("PppUsers.findByEmail", PppUsers.class)
             .setParameter("email", email)
             .getResultList().get(0);
     }

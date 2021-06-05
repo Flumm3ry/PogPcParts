@@ -11,8 +11,8 @@ import entity.UserDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import session.CartBeanRemote;
 import session.OrderFacadeRemote;
@@ -22,8 +22,8 @@ import session.UserFacadeRemote;
  *
  * @author jerem
  */
-@Named(value = "myCartManagedBean")
-@SessionScoped
+@Named(value = "myOrderManagedBean")
+@RequestScoped
 public class MyOrderManagedBean implements Serializable {
 
     @EJB
