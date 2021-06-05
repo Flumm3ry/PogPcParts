@@ -129,7 +129,7 @@ public class UserFacade implements UserFacadeRemote {
         searchTerm = "%" + searchTerm + "%";
         
         return em.createQuery(
-            "SELECT u FROM Users u WHERE u.name LIKE :searchTerm OR u.email LIKE :searchTerm", PppUsers.class)
+            "SELECT u FROM PppUsers u WHERE u.name LIKE :searchTerm OR u.email LIKE :searchTerm", PppUsers.class)
             .setParameter("searchTerm", searchTerm)
             .getResultList()
             .stream()

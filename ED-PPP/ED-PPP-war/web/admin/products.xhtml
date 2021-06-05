@@ -6,64 +6,97 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Admin Product Search</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
-        <h:form>
-            <h:outputLabel value="Name:"/>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/ED-PPP-war/index.xhtml">POG PC Parts</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/ED-PPP-war/user/products.xhtml">
+                        Search Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/orders.xhtml">
+                        My Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/cart.xhtml">
+                        My Cart
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/updateUser.xhtml">
+                        Update My Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/changePassword.xhtml">
+                        Change My Password
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/addProduct.xhtml">
+                        Add Product
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/users.xhtml">
+                        Update Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/products.xhtml">
+                        Update Products
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <h:form>
+                <h:outputLabel value="Name:"/>
 
-            <h:inputText title="Search" id="searchTerm"
-                         maxlength="25"
-                         value="#{myProductManagedBean.searchTerm}"/>
+                <h:inputText title="Search" id="searchTerm"
+                             maxlength="25"
+                             value="#{myProductManagedBean.searchTerm}"/>
 
-            <h:outputLabel value="Category:"/>
-            <h:selectOneMenu id="category"
-                             required="false"
-                             value="#{myProductManagedBean.filterCategory}">
-                <f:selectItem itemValue="" itemLabel="All"></f:selectItem>
-                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
-                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
-                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
-                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
-                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
-            </h:selectOneMenu>
+                <h:outputLabel value="Category:"/>
+                <h:selectOneMenu id="category"
+                                 required="false"
+                                 value="#{myProductManagedBean.filterCategory}">
+                    <f:selectItem itemValue="" itemLabel="All"></f:selectItem>
+                    <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                    <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                    <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                    <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                    <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                </h:selectOneMenu>
 
-            <h:outputLabel value="Price Ascending:"/>
-            <h:selectBooleanCheckbox id="priceAscending" 
-                                     required="false" 
-                                     value="#{myProductManagedBean.isAscending}" />
+                <h:outputLabel value="Price Ascending:"/>
+                <h:selectBooleanCheckbox id="priceAscending" 
+                                         required="false" 
+                                         value="#{myProductManagedBean.isAscending}" />
 
-            <h:commandButton id="submit" value="Submit" 
-                             action="#{myProductManagedBean.adminSearchProducts()}"/>
-        </h:form>
-        <table>
-            <tbody>
-                <ui:repeat var="p" value="#{myProductBean.productList}">
-                    <tr>
-                        <td>
-                            #{p.productId}
-                        </td>
-                        <td>
-                            #{p.image}
-                        </td>
-                        <td>
-                            #{p.name}
-                        </td>
-                        <td>
-                            #{p.price}
-                        </td>
-                        <td>
-                            #{p.category}
-                        </td>
+                <h:commandButton id="submit" value="Submit" 
+                                 action="#{myProductManagedBean.adminSearchProducts()}"/>
+            </h:form>
+            <ui:repeat var="p" value="#{myProductBean.productList}">
+                <div class="media">
+                    <img class="mr-3" src="#{p.image}" alt="#{p.name} Image" />
+                    <div class="media-body">
+                        <h5 class="mt-0">#{p.productId}: #{p.name} $#{p.price}</h5>
+                        <h6>#{p.category}</h6>
+                        #{p.description}
                         <h:form>
-                            <td>
-                                <h:commandButton id="submit" value="Submit" 
-                                                 action="#{myProductManagedBean.getProduct(p.productId)}"/>
-                            </td>
+                            <h:commandButton id="submit" value="Submit" 
+                                             action="#{myProductManagedBean.getProduct(p.productId)}"/>
                         </h:form>
-                    </tr>
-                </ui:repeat>>
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </ui:repeat>
+        </div>
     </h:body>
 </html>
 

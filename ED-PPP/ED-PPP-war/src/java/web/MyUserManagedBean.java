@@ -187,7 +187,7 @@ public class MyUserManagedBean implements Serializable{
         UserDTO userDto = userFacade.getUserById(userIdToGet);
         
         if (userDto == null) return "fail";
-        
+
         userId = userDto.getUserId();
         name = userDto.getName();
         phone = userDto.getPhone();

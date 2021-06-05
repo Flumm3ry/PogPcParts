@@ -82,7 +82,7 @@ public class MyOrderManagedBean implements Serializable {
             return cartBean.clearCart() ? "success" : "fail";
         }
 
-        return "failure";
+        return "fail";
     }
     
     public String removeCartItem(int productId) {

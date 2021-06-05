@@ -7,6 +7,51 @@
         <title>Update Product</title>
     </h:head>
     <h:body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/ED-PPP-war/index.xhtml">POG PC Parts</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/ED-PPP-war/user/products.xhtml">
+                        Search Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/orders.xhtml">
+                        My Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/cart.xhtml">
+                        My Cart
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/updateUser.xhtml">
+                        Update My Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/changePassword.xhtml">
+                        Change My Password
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/addProduct.xhtml">
+                        Add Product
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/users.xhtml">
+                        Update Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/products.xhtml">
+                        Update Products
+                    </a>
+                </li>
+            </ul>
+        </nav>
         <h:form>
             <table>
                 <tbody>
@@ -53,6 +98,22 @@
                             <h:selectOneMenu id="category"
                                              required="true"
                                              value="#{myProductManagedBean.category}">
+                                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel value="Image:"/>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="image"
+                                             required="true"
+                                             value="#{myProductManagedBean.image}">
                                 <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
                                 <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
                                 <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>

@@ -5,64 +5,107 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Admin User Search</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
-        <h:form>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Name:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Search" id="searchTerm"
-                                         maxlength="25"
-                                         value="#{myUserManagedBean.searchTerm}"/>
-                        </td>
-                        <td>
-                            <h:commandButton id="updateUser" value="Update User" 
-                                             action="#{myUserManagedBean.searchUsers()}"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>Results</h3>
-        </h:form>
-        <table>
-            <tbody>
-                <ui:repeat var="u" value="#{myUserManagedBean.userList}">
-                    <tr>
-                        <td>
-                            #{u.userId}
-                        </td>
-                        <td>
-                            #{u.email}
-                        </td>
-                        <td>
-                            #{u.name}
-                        </td>
-                        <td>
-                            #{u.address}
-                        </td>
-                        <td>
-                            #{u.phone}
-                        </td>
-                        <td>
-                            #{u.appGroup}
-                        </td>
-                        <td>
-                            #{u.active}
-                        </td>
-                        <h:form>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/ED-PPP-war/index.xhtml">POG PC Parts</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/ED-PPP-war/user/products.xhtml">
+                        Search Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/orders.xhtml">
+                        My Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/cart.xhtml">
+                        My Cart
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/updateUser.xhtml">
+                        Update My Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/user/changePassword.xhtml">
+                        Change My Password
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/addProduct.xhtml">
+                        Add Product
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/users.xhtml">
+                        Update Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/ED-PPP-war/admin/products.xhtml">
+                        Update Products
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <h:form>
+                <table>
+                    <tbody>
+                        <tr>
                             <td>
-                                <h:commandButton id="submit" value="Submit" 
-                                                 action="#{MyUserManagedBean.getUser(u.userId)}"/>
+                                <h:outputLabel value="Name:"/>
                             </td>
-                        </h:form>
-                    </tr>
-                </ui:repeat>>
-            </tbody>
-        </table>
+                            <td>
+                                <h:inputText title="Search" id="searchTerm"
+                                             maxlength="25"
+                                             value="#{myUserManagedBean.searchTerm}"/>
+                            </td>
+                            <td>
+                                <h:commandButton id="updateUser" value="Search" 
+                                                 action="#{myUserManagedBean.searchUsers()}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Results</h3>
+            </h:form>
+            <h:form id="updateUser">
+                <h:dataTable var="u" value="#{myUserManagedBean.userList}" class="table">
+                    <h:column>
+                        #{u.userId}
+                    </h:column>
+                    <h:column>
+                        #{u.email}
+                    </h:column>
+                    <h:column>
+                        #{u.name}
+                    </h:column>
+                    <h:column>
+                        #{u.address}
+                    </h:column>
+                    <h:column>
+                        #{u.phone}
+                    </h:column>
+                    <h:column>
+                        #{u.appGroup}
+                    </h:column>
+                    <h:column>
+                        #{u.active ? "Active" : "Inactive"}
+                    </h:column>
+                    <h:column>
+
+                        <h:commandButton id="submit" value="Update User" 
+                                         action="#{myUserManagedBean.getUser(u.userId)}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

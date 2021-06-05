@@ -76,7 +76,7 @@ public class ProductDB {
             stmnt.execute("CREATE TABLE " + DB_TABLE
                     + " (ProductId INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
                     + " Name VARCHAR(25) NOT NULL,"
-                    + " Description CHAR(10) NOT NULL,"
+                    + " Description VARCHAR(100) NOT NULL,"
                     + " Price FLOAT NOT NULL,"
                     + " Image VARCHAR(50) NOT NULL,"
                     + " Category VARCHAR(50) NOT NULL,"

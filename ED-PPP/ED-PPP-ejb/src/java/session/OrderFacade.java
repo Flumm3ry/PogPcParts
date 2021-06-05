@@ -91,7 +91,7 @@ public class OrderFacade implements OrderFacadeRemote {
 
     @Override
     public boolean addOrder(OrderDTO orderDto) {
-        if (orderDto == null || find(orderDto.getOrderId()) != null || orderDto.getItems().isEmpty()) {
+        if (orderDto == null || orderDto.getOrderId() != null || orderDto.getItems().isEmpty()) {
             return false;
         }
 
