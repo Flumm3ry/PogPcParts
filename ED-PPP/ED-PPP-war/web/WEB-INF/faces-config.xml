@@ -86,7 +86,7 @@
         <navigation-case>
             <from-action>#{myProductManagedBean.updateProduct()}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>/user/updateProductSuccess.xhtml</to-view-id>
+            <to-view-id>/admin/updateProductSuccess.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -177,6 +177,12 @@
         <navigation-case>
             <from-outcome>fail</from-outcome>
             <to-view-id>/unexpectedError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myOrderManagedBean.removeCartItem(c.productId)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/cart.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
 </faces-config>

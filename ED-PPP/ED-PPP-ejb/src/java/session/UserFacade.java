@@ -25,7 +25,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author jerem
  */
 @DeclareRoles({"ADMIN", "USER"})
-@Stateless
+@Stateless(mappedName="ejb/UserFacadeRemote")
 public class UserFacade implements UserFacadeRemote {
     
     @PersistenceContext

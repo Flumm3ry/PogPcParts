@@ -21,10 +21,8 @@
                                          maxlength="25"
                                          required="true" 
                                          requiredMessage="Name is required"
-                                         value="#{myUserManagedBean.name}"/>
-                        </td>
-                        <td>
-                            <h:message for="name" style="color:red"/>
+                                         value="#{myUserManagedBean.name}"
+                                         class="form-control"/>
                         </td>
                     </tr>
                     <tr>
@@ -34,7 +32,9 @@
                         <td>
                             <h:inputText title="Phone" maxlength="10"
                                          required="true"
-                                         value="#{myUserManagedBean.phone}"/>     
+                                         value="#{myUserManagedBean.phone}"
+                                         class="form-control"
+                                         requiredMessage="Phone number is required"/>     
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,9 @@
                         <td>
                             <h:inputText title="Address" maxlength="30" 
                                          required="true"
-                                         value="#{myUserManagedBean.address}"/>
+                                         value="#{myUserManagedBean.address}"
+                                         class="form-control"
+                                         requiredMessage="Address number is required"/>
                         </td>
                     </tr>
                     <tr>
@@ -54,6 +56,7 @@
                         <td>
                             <h:inputText title="Email" maxlength="30" 
                                          required="true"
+                                         validatorMessage="Invalid Email"
                                          value="#{myUserManagedBean.email}"
                                          class="form-control">
                                 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
@@ -68,7 +71,9 @@
                             <h:inputSecret title="Password"
                                            maxlength="30"
                                            required="true"
-                                           value="#{myUserManagedBean.password}"/>
+                                           requiredMessage="Password is required"
+                                           value="#{myUserManagedBean.password}"
+                                           class="form-control"/>
                         </td>
                     </tr>  
                 </tbody>
