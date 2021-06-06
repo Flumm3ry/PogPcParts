@@ -22,6 +22,7 @@ public class CartBean implements CartBeanRemote {
 
     public CartBean() {
         cart = new ArrayList();
+        cart.add(new CartItemDTO(2, "Ant", 6000));
     }
     
     @Remove
@@ -62,8 +63,16 @@ public class CartBean implements CartBeanRemote {
     }
 
     @Override
+    public List<CartItemDTO> getCartItems() {
+        return cart;
+    }
+
     public List<CartItemDTO> getCart() {
         return cart;
+    }
+
+    public void setCart(List<CartItemDTO> cart) {
+        this.cart = cart;
     }
 
     @Override

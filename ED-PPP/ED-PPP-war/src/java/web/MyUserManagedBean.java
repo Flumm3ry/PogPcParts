@@ -9,7 +9,7 @@ import entity.UserDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
@@ -20,7 +20,7 @@ import session.UserFacadeRemote;
  * @author jerem
  */
 @Named(value = "myUserManagedBean")
-@RequestScoped
+@SessionScoped
 @ManagedBean
 public class MyUserManagedBean implements Serializable{
 
@@ -183,8 +183,8 @@ public class MyUserManagedBean implements Serializable{
         return "fail";
     }
     
-    public String getUser(Integer userIdToGet) {
-        UserDTO userDto = userFacade.getUserById(userIdToGet);
+    public String getUser() {
+        UserDTO userDto = userFacade.getUserById(userId);
         
         if (userDto == null) return "fail";
 

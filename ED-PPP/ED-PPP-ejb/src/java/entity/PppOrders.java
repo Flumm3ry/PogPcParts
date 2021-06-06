@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,7 +54,7 @@ public class PppOrders implements Serializable {
     @JoinColumn(name = "USERID", referencedColumnName = "USERID")
     @ManyToOne(optional = false)
     private PppUsers userid;
-    @OneToMany(mappedBy = "orderid")
+    @OneToMany(mappedBy = "orderid", cascade =  CascadeType.PERSIST)
     private Collection<PppProductOrder> pppProductOrderCollection;
 
     public PppOrders() {

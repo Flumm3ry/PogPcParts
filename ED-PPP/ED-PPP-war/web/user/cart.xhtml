@@ -2,12 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>My Cart</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
+        <f:metadata>
+            <f:viewAction action="#{myOrderManagedBean.getCartItems()}" />
+        </f:metadata>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/ED-PPP-war/index.xhtml">POG PC Parts</a>
             <ul class="navbar-nav">
@@ -53,33 +57,44 @@
                 </li>
             </ul>
         </nav>
-        <table class="table">
-            <tbody>
-                <ui:repeat var="c" value="#{myOrderManagedBean.cartItemList}">
+        <div class="container">
+            <h1>Items in Your Cart</h1>
+            <table class="table">
+                <tbody>
                     <tr>
-                        <td>
-                            #{c.productId}
-                        </td>
-                        <td>
-                            #{c.productName}
-                        </td>
-                        <td>
-                            #{c.quantity}
-                        </td>
-                        <td>
-                            <h:form>
-                                <h:commandButton id="submit" value="Remove" 
-                                                 action="#{myOrderManagedBean.removeCartItem(p.productId)}"/>
-                            </h:form>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Qty</th>
+                        <th></th>
                     </tr>
-                </ui:repeat>
-            </tbody>
-        </table>
-        <h:form>
-            <h:commandButton id="submit" value="Checkout Cart" 
-                                             action="#{myOrderManagedBean.checkoutCart()}"/>
-        </h:form>
+                    <ui:repeat var="c" value="#{myOrderManagedBean.cartItemList}">
+                        <tr>
+                            <td>
+                                P#{c.productId}
+                            </td>
+                            <td>
+                                #{c.productName}
+                            </td>
+                            <td>
+                                x#{c.quantity}
+                            </td>
+                            <td>
+                                <h:form>
+                                    <h:commandButton id="submit" value="Remove" 
+                                                     action="#{myOrderManagedBean.removeCartItem(p.productId)}"
+                                                     class="btn btn-danger"/>
+                                </h:form>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+            <h:form>
+                <h:commandButton id="submit" value="Checkout Cart" 
+                                 action="#{myOrderManagedBean.checkoutCart()}"
+                                 class="btn btn-primary"/>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

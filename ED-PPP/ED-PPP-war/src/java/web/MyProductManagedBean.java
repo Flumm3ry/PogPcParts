@@ -10,7 +10,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import session.ProductFacadeRemote;
 
 /**
@@ -18,7 +18,7 @@ import session.ProductFacadeRemote;
  * @author jerem
  */
 @Named(value = "myProductManagedBean")
-@RequestScoped
+@SessionScoped
 public class MyProductManagedBean implements Serializable {
 
     @EJB
@@ -165,13 +165,14 @@ public class MyProductManagedBean implements Serializable {
         return "fail";
     }
     
-    public String getProduct(Integer productIdToGet) {
-        ProductDTO productDto = productFacade.getProductById(productIdToGet);
+    public String getProduct() {
+        ProductDTO productDto = productFacade.getProductById(productId);
         
         if (productDto == null) return "fail";
         
         setProductId(productDto.getProductId());
         setName(productDto.getName());
+        setPrice(productDto.getPrice());
         setDescription(productDto.getDescription());
         setImage(productDto.getImage());
         setActive(productDto.isActive());

@@ -12,7 +12,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/ED-PPP-war/index.xhtml">POG PC Parts</a>
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/ED-PPP-war/user/products.xhtml">
                         Search Products
                     </a>
@@ -55,44 +55,54 @@
             </ul>
         </nav>
         <div class="container">
+            <h1>Product Search</h1>
             <h:form>
-                <h:outputLabel value="Name:"/>
+                <div class="mb-3">
+                    <h:outputLabel value="Name" class="form-label"/>
 
-                <h:inputText title="Search" id="searchTerm"
-                             maxlength="25"
-                             value="#{myProductManagedBean.searchTerm}"/>
+                    <h:inputText title="Search" id="searchTerm"
+                                 maxlength="25"
+                                 value="#{myProductManagedBean.searchTerm}"
+                                 class="form-control" />
+                    <div class="form-text">Leave blank to show all products.</div>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Category" class="form-label"/>
+                    <h:selectOneMenu id="category"
+                                     required="false"
+                                     value="#{myProductManagedBean.filterCategory}"
+                                     class="form-select">
+                        <f:selectItem itemValue="" itemLabel="All"></f:selectItem>
+                        <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                        <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                        <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                        <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                        <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                    </h:selectOneMenu>
+                </div>
+                <div class="mb-3">
+                    <h:selectBooleanCheckbox id="priceAscending" 
+                                             required="false" 
+                                             value="#{myProductManagedBean.isAscending}"
+                                             class="form-check-input"/>
+                    <h:outputLabel value="Price Ascending" class="form-check-label"/>
+                </div>
 
-                <h:outputLabel value="Category:"/>
-                <h:selectOneMenu id="filterCategory"
-                                 required="false"
-                                 value="#{myProductManagedBean.filterCategory}">
-                    <f:selectItem itemValue="" itemLabel="All"></f:selectItem>
-                    <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
-                    <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
-                    <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
-                    <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
-                    <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
-                </h:selectOneMenu>
-
-                <h:outputLabel value="Price Ascending:"/>
-                <h:selectBooleanCheckbox id="priceAscending" 
-                                         required="false" 
-                                         value="#{myProductManagedBean.isAscending}" />
-
-                <h:commandButton id="submit" value="Submit" 
-                                 action="#{myProductManagedBean.searchProducts()}"/>
+                <h:commandButton id="submit" value="Search" 
+                                 action="#{myProductManagedBean.searchProducts()}"
+                                 class="btn btn-primary" />
             </h:form>
-            <ui:repeat var="p" value="#{myProductBean.productList}">
+            <ui:repeat var="p" value="#{myProductManagedBean.productList}">
                 <div class="media">
                     <img class="mr-3" src="#{p.image}" alt="#{p.name} Image" />
                     <div class="media-body">
-                        <h5 class="mt-0">#{p.name} $#{p.price}</h5>
+                        <h5 class="mt-0">#{p.name} - $#{p.price}</h5>
                         <h6>#{p.category}</h6>
                         #{p.description}
-                        <h:form>
-                            <h:commandButton id="submit" value="Submit" 
-                                             action="#{myProductManagedBean.getProduct(p.productId)}"/>
-                        </h:form>
+                        <h:outputLink value="/ED-PPP-war/user/productDetails.xhtml">
+                            <f:param name="productId" value="#{p.productId}" />
+                            View Product &#8594;
+                        </h:outputLink>
                     </div>
                 </div>
             </ui:repeat>

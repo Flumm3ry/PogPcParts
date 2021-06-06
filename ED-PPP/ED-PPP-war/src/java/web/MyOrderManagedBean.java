@@ -11,7 +11,7 @@ import entity.UserDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import session.CartBeanRemote;
@@ -23,7 +23,7 @@ import session.UserFacadeRemote;
  * @author jerem
  */
 @Named(value = "myOrderManagedBean")
-@RequestScoped
+@SessionScoped
 public class MyOrderManagedBean implements Serializable {
 
     @EJB
@@ -74,7 +74,7 @@ public class MyOrderManagedBean implements Serializable {
         UserDTO userDto = userFacade.getUserByEmail(loggedInEmail);
         if (userDto == null) return "fail";
         
-        OrderDTO orderDto = new OrderDTO(null, userDto.getUserId(), new java.sql.Date(System.currentTimeMillis()), cartBean.getCart());
+        OrderDTO orderDto = new OrderDTO(null, userDto.getUserId(), new java.sql.Date(System.currentTimeMillis()), cartBean.getCartItems());
 
         boolean addOrderResult = orderFacade.addOrder(orderDto);
 
@@ -97,7 +97,8 @@ public class MyOrderManagedBean implements Serializable {
     
     public String getCartItems() {
         try {
-            cartItemList = cartBean.getCart();
+            cartItemList = cartBean.getCartItems();
+            if (cartBean.getCartItems() == null) return "bruh";
             return "success";
         } catch (Exception e) {
         }

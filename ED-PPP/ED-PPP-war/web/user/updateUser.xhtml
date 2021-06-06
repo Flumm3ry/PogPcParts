@@ -8,7 +8,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
+        <f:metadata>
+            <f:viewAction action="#{myUserManagedBean.getCurrentUser()}" />
+        </f:metadata>
         <h:form>
+            <h:inputHidden id="userId" value="#{myUserManagedBean.userId}" />
             <table>
                 <tbody>
                     <tr>
@@ -59,7 +63,7 @@
             <p></p>
 
             <h:commandButton id="updateUser" value="Update User" 
-                             action="#{myUserBean.updateMyDetails()}"/>
+                             action="#{myUserManagedBean.updateUser()}"/>
 
         </h:form>
     </h:body>

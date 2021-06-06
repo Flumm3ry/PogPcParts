@@ -20,7 +20,7 @@ public interface CartBeanRemote {
 
     boolean removeCartItem(int productId);
 
-    List<CartItemDTO> getCart();
+    List<CartItemDTO> getCartItems();
 
     boolean clearCart();
     

@@ -72,9 +72,9 @@ public class ProductFacade implements ProductFacadeRemote {
             searchTerm = "";
         }
         category = "%" + category + "%";
-        searchTerm = "%" + searchTerm + "%";
+        searchTerm = "%" + searchTerm.toLowerCase() + "%";
 
-        return em.createQuery("SELECT p FROM PppProducts p WHERE p.name LIKE :searchTerm AND p.category LIKE :category", PppProducts.class)
+        return em.createQuery("SELECT p FROM PppProducts p WHERE LOWER(p.name) LIKE :searchTerm AND p.category LIKE :category", PppProducts.class)
                 .setParameter("searchTerm", searchTerm)
                 .setParameter("category", category)
                 .getResultList();

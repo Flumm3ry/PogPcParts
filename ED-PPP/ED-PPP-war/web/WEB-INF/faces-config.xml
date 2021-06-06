@@ -11,16 +11,14 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-action>{myProductManagedBean.searchProducts()}</from-action>
+            <from-action>#{myProductManagedBean.searchProducts()}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>/user/products.xhtml</to-view-id>
-            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>{myProductManagedBean.getProduct()}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>/user/productDetails.xhtml</to-view-id>
-            <redirect/>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -52,9 +50,44 @@
             <to-view-id>/admin/users.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-action>#{myUserManagedBean.getUser(u.userId)}</from-action>
+            <from-action>#{myUserManagedBean.getUser()}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>/admin/updateUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/admin/updateUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/unexpectedError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myUserManagedBean.getUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/updateUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myUserManagedBean.adminUpdateUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/updateUserSuccess.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/user/productDetails.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/unexpectedError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myProductManagedBean.getProduct()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/productDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myOrderManagedBean.addCartItem(myProductManagedBean.productId, myProductManagedBean.name)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/cart.xhtml</to-view-id>
+            <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -88,6 +121,40 @@
         <navigation-case>
             <from-outcome>fail</from-outcome>
             <to-view-id>/user/changePasswordFailure.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/user/updateUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/unexpectedError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myUserManagedBean.getCurrentUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/updateUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myUserManagedBean.updateUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/updateUserSuccess.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/user/cart.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{myOrderManagedBean.getCartItems()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/cart.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myOrderManagedBean.checkoutCart()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/cart.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/unexpectedError.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

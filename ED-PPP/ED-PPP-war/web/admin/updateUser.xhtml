@@ -5,8 +5,13 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Update User</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
+        <f:metadata>
+            <f:viewParam name="userId" value="#{myUserManagedBean.userId}" />
+            <f:viewAction action="#{myUserManagedBean.getUser()}" />
+        </f:metadata>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/ED-PPP-war/index.xhtml">POG PC Parts</a>
             <ul class="navbar-nav">
@@ -53,6 +58,7 @@
             </ul>
         </nav>
         <h:form>
+            <h:inputHidden id="userId" value="#{myUserManagedBean.userId}" />
             <table>
                 <tbody>
                     <tr>

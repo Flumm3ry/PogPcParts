@@ -38,7 +38,7 @@ public class UserFacade implements UserFacadeRemote {
         em.merge(entity);
     }
     
-    private PppUsers find(int id) {
+    private PppUsers find(Integer id) {
         return em.find(PppUsers.class, id);
     }
     
@@ -94,12 +94,16 @@ public class UserFacade implements UserFacadeRemote {
 
     @Override
     public boolean updateUser(UserDTO userDto) {
-        if (userDto == null || find(userDto.getUserId()) == null) return false;
+        if (userDto == null) return false;
+        
+        PppUsers existingUser = find(userDto.getUserId());
+        
+        if (existingUser == null) return false;
         
         PppUsers user = DTO2DAO(userDto);
-        user.setPassword(null);
-        user.setAppgroup(null);
-        user.setActive(null);
+        user.setPassword(existingUser.getPassword());
+        user.setAppgroup(existingUser.getAppgroup());
+        user.setActive(existingUser.getActive());
         
         edit(user);
         
@@ -139,7 +143,7 @@ public class UserFacade implements UserFacadeRemote {
 
     @Override
     public boolean adminUpdateUser(UserDTO userDto) {
-        if (userDto == null || find(userDto.getUserId()) == null) return false;
+        if (userDto == null || userDto.getUserId() == null || find(userDto.getUserId()) == null) return false;
         
         userDto.setPassword(encryptPassword(userDto.getPassword()));
         
