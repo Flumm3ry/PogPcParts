@@ -12,6 +12,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +24,8 @@ import javax.xml.bind.DatatypeConverter;
  *
  * @author jerem
  */
-@Stateless(mappedName="ejb/UserFacadeRemote")
+@DeclareRoles({"ADMIN", "USER"})
+@Stateless
 public class UserFacade implements UserFacadeRemote {
     
     @PersistenceContext
@@ -83,16 +87,19 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public UserDTO getUserById(int userId) {
         return DAO2DTO(find(userId));
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public UserDTO getUserByEmail(String email) {
         return DAO2DTO(findByEmail(email));
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public boolean updateUser(UserDTO userDto) {
         if (userDto == null) return false;
         
@@ -111,6 +118,7 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public boolean updatePassword(int userId, String oldPassword, String newPassword) {
         // find the employee
         PppUsers user = find(userId);
@@ -128,6 +136,7 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN"})
     public List<UserDTO> searchUsers(String searchTerm) {
         if (searchTerm == null) searchTerm = "";
         searchTerm = "%" + searchTerm + "%";
@@ -142,6 +151,7 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN"})
     public boolean adminUpdateUser(UserDTO userDto) {
         if (userDto == null || userDto.getUserId() == null || find(userDto.getUserId()) == null) return false;
         
@@ -153,6 +163,7 @@ public class UserFacade implements UserFacadeRemote {
     }
 
     @Override
+    @PermitAll
     public boolean addUser(UserDTO userDto) {
         if (userDto == null || userDto.getUserId() != null) return false;
         

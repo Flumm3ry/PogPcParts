@@ -14,6 +14,8 @@ import entity.PppUsers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +24,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author jerem
  */
+@DeclareRoles({"ADMIN", "USER"})
 @Stateless
 public class OrderFacade implements OrderFacadeRemote {
 
@@ -90,6 +93,7 @@ public class OrderFacade implements OrderFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public boolean addOrder(OrderDTO orderDto) {
         if (orderDto == null || orderDto.getOrderId() != null || orderDto.getItems().isEmpty()) {
             return false;
@@ -101,6 +105,7 @@ public class OrderFacade implements OrderFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public List<OrderDTO> getOrdersByUserId(int userId) {
         return findAllByUserId(userId)
             .stream()

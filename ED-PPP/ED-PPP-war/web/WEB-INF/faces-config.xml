@@ -73,6 +73,23 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/admin/updateProduct.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/unexpectedError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myProductManagedBean.getProduct()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/updateProduct.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myProductManagedBean.updateProduct()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/user/updateProductSuccess.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>/user/productDetails.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>fail</from-outcome>
@@ -150,7 +167,12 @@
         <navigation-case>
             <from-action>#{myOrderManagedBean.checkoutCart()}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>/user/cart.xhtml</to-view-id>
+            <to-view-id>/user/checkoutSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{myOrderManagedBean.checkoutCart()}</from-action>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/user/checkoutFailure.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>fail</from-outcome>

@@ -5,6 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Add new product</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"></link>
     </h:head>
     <h:body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -52,94 +53,76 @@
                 </li>
             </ul>
         </nav>
-        <h:form>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Name:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Name" id="name"
-                                         maxlength="25"
-                                         required="true" 
-                                         requiredMessage="Name is required"
-                                         value="#{myProductManagedBean.name}"/>
-                        </td>
-                        <td>
-                            <h:message for="name" style="color:red"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Description:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Description" maxlength="100"
-                                         required="true"
-                                         value="#{myProductManagedBean.description}"/>     
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Price:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Price" maxlength="30" 
-                                         required="true"
-                                         value="#{myProductManagedBean.price}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Category:"/>
-                        </td>
-                        <td>
-                            <h:selectOneMenu id="category"
-                                             required="true"
-                                             value="#{myProductManagedBean.category}">
-                                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
-                                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
-                                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
-                                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
-                                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Image:"/>
-                        </td>
-                        <td>
-                            <h:selectOneMenu id="image"
-                                             required="true"
-                                             value="#{myProductManagedBean.image}">
-                                <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
-                                <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
-                                <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
-                                <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
-                                <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Active:" for="active"/> 
-                        </td>
-                        <td>
-                            <h:selectBooleanCheckbox id="active" 
-                                                     required="false" 
-                                                     value="#{myProductManagedBean.active}" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container">
+            <h1>Add a new product</h1>
+            <h:form>
+                <div class="mb-3">
+                    <h:outputLabel value="Name" class="form-label"/>
+                    <h:inputText title="Name" id="name"
+                                 maxlength="25"
+                                 required="true" 
+                                 requiredMessage="Name is required"
+                                 value="#{myProductManagedBean.name}"
+                                 class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Description" class="form-label"/>
+                    <h:inputText title="Description" maxlength="100"
+                                 required="true"
+                                 value="#{myProductManagedBean.description}"
+                                 class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Price" class="form-label"/>
+                    <h:inputText title="Price" maxlength="30" 
+                                 required="true"
+                                 requiredMessage="Price is required"
+                                 validatorMessage="Please enter a valid price"
+                                 converterMessage="Please enter a valid price"
+                                 value="#{myProductManagedBean.price}"
+                                 class="form-control">
+                        <f:validateLongRange minimum="1" />
+                    </h:inputText>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Category" class="form-label"/>
+                    <h:selectOneMenu id="category"
+                                     required="true"
+                                     value="#{myProductManagedBean.category}"
+                                     class="form-select">
+                        <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                        <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                        <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                        <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                        <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                    </h:selectOneMenu>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Image" class="form-label"/>
+                    <h:selectOneMenu id="image"
+                                     required="true"
+                                     value="#{myProductManagedBean.image}"
+                                     class="form-select">
+                        <f:selectItem itemValue="Monitor" itemLabel="Monitor"></f:selectItem>                                
+                        <f:selectItem itemValue="Keyboard" itemLabel="Keyboard"></f:selectItem>
+                        <f:selectItem itemValue="Mice" itemLabel="Mice"></f:selectItem>
+                        <f:selectItem itemValue="CPU" itemLabel="CPU"></f:selectItem>
+                        <f:selectItem itemValue="GPU" itemLabel="GPU"></f:selectItem>
+                    </h:selectOneMenu>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Active" for="active" class="form-check-label"/> 
+                    <h:selectBooleanCheckbox id="active" 
+                                             required="false" 
+                                             value="#{myProductManagedBean.active}"
+                                             class="form-check-input"/>
+                </div>
 
-            <p></p>
-
-            <h:commandButton id="submit" value="Submit" 
-                             action="#{myProductManagedBean.addProduct()}"/>
-        </h:form>
+                <h:commandButton id="submit" value="Submit" 
+                                 action="#{myProductManagedBean.addProduct()}"
+                                 class="btn btn-primary"/>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

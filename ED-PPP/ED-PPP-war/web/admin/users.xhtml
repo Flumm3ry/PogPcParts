@@ -55,27 +55,24 @@
             </ul>
         </nav>
         <div class="container">
+            <h1>User Search</h1>
             <h:form>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <h:outputLabel value="Name:"/>
-                            </td>
-                            <td>
-                                <h:inputText title="Search" id="searchTerm"
-                                             maxlength="25"
-                                             value="#{myUserManagedBean.searchTerm}"/>
-                            </td>
-                            <td>
-                                <h:commandButton id="updateUser" value="Search" 
-                                                 action="#{myUserManagedBean.searchUsers()}"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3>Results</h3>
+                <div class="mb-3">
+                    <h:outputLabel value="Name" class="form-label"/>
+
+                    <h:inputText title="Search" id="searchTerm"
+                                 maxlength="25"
+                                 value="#{myUserManagedBean.searchTerm}"
+                                 class="form-control" />
+                    <div class="form-text">Leave blank to show all users.</div>
+                </div>
+                
+
+                <h:commandButton id="submit" value="Search" 
+                                 action="#{myUserManagedBean.searchUsers()}"
+                                 class="btn btn-primary" />
             </h:form>
+
             <h:dataTable var="u" value="#{myUserManagedBean.userList}" class="table">
                 <h:column>
                     #{u.userId}

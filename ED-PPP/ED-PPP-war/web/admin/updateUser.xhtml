@@ -58,104 +58,70 @@
             </ul>
         </nav>
         <h:form>
-            <h:inputHidden id="userId" value="#{myUserManagedBean.userId}" />
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Employee Id:"/>
-                        </td>
-                        <td>
-                            <h:outputText value="#{myUserManagedBean.userId}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Name:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Name" id="name"
-                                         maxlength="25"
-                                         required="true" 
-                                         requiredMessage="Name is required"
-                                         value="#{myUserManagedBean.name}"/>
-                        </td>
-                        <td>
-                            <h:message for="name" style="color:red"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Phone:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Phone" maxlength="10"
-                                         required="true"
-                                         value="#{myUserManagedBean.phone}"/>     
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Address:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Address" maxlength="30" 
-                                         required="true"
-                                         value="#{myUserManagedBean.address}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Email:"/>
-                        </td>
-                        <td>
-                            <h:inputText title="Email" maxlength="30" 
-                                         required="true"
-                                         value="#{myUserManagedBean.email}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Password"/>
-                        </td>
-                        <td>
-                            <h:inputSecret title="Password"
-                                           maxlength="30"
-                                           required="false"
-                                           value="#{myUserManagedBean.password}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="App Group:"/>
-                        </td>
-                        <td>
-                            <h:selectOneMenu id="appgroup"
-                                             required="true"
-                                             value="#{myUserManagedBean.appGroup}">
-                                <f:selectItem itemValue="USER" itemLabel="USER"></f:selectItem>                                
-                                <f:selectItem itemValue="ADMIN" itemLabel="ADMIN"></f:selectItem>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:outputLabel value="Active:" for="active"/> 
-                        </td>
-                        <td>
-                            <h:selectBooleanCheckbox id="active" 
-                                                     required="false" 
-                                                     value="#{myUserManagedBean.active}" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="container">
+                <h1>Update User Details</h1>
+                <h:inputHidden id="userId" value="#{myUserManagedBean.userId}" />
+                <div class="mb-3">
+                    <h:outputLabel value="Name" class="form-label"/>
+                    <h:inputText title="Name" id="name"
+                                 maxlength="25"
+                                 required="true" 
+                                 requiredMessage="Name is required"
+                                 value="#{myUserManagedBean.name}"
+                                 class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Phone" class="form-label"/>
+                    <h:inputText title="Phone" maxlength="10"
+                                 required="true"
+                                 value="#{myUserManagedBean.phone}"
+                                 class="form-control"/> 
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Address" class="form-label"/>
+                    <h:inputText title="Address" maxlength="30" 
+                                 required="true"
+                                 value="#{myUserManagedBean.address}"
+                                 class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Email" class="form-label"/>
+                    <h:inputText title="Email" maxlength="30" 
+                                 required="true"
+                                 value="#{myUserManagedBean.email}"
+                                 class="form-control">
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                    </h:inputText>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="Password" class="form-label"/>
+                    <h:inputSecret title="Password"
+                                   maxlength="30"
+                                   required="false"
+                                   value="#{myUserManagedBean.password}"
+                                   class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <h:outputLabel value="App Group" class="form-label"/>
+                    <h:selectOneMenu id="appgroup"
+                                     required="true"
+                                     value="#{myUserManagedBean.appGroup}" class="form-select">
+                        <f:selectItem itemValue="USER" itemLabel="USER"></f:selectItem>                                
+                        <f:selectItem itemValue="ADMIN" itemLabel="ADMIN"></f:selectItem>
+                    </h:selectOneMenu>
+                </div>
+                <div class="mb-3">
+                    <h:selectBooleanCheckbox id="active" 
+                                             required="false" 
+                                             value="#{myUserManagedBean.active}"
+                                             class="form-check-input"/>
+                    <h:outputLabel value="Active" for="active" class="form-check-label"/> 
+                </div>
 
-            <p></p>
-
-            <h:commandButton id="submit" value="Submit" 
-                             action="#{myUserManagedBean.adminUpdateUser()}"/>
-
+                <h:commandButton id="submit" value="Submit" 
+                                 action="#{myUserManagedBean.adminUpdateUser()}"
+                                 class="btn btn-primary"/>
+            </div>
         </h:form>
     </h:body>
 </html>

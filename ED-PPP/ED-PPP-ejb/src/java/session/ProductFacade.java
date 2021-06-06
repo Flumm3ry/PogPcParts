@@ -10,6 +10,8 @@ import entity.ProductDTO;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author jerem
  */
+@DeclareRoles({"ADMIN", "USER"})
 @Stateless
 public class ProductFacade implements ProductFacadeRemote {
 
@@ -81,11 +84,13 @@ public class ProductFacade implements ProductFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public ProductDTO getProductById(int productId) {
         return DAO2DTO(find(productId));
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "USER"})
     public List<ProductDTO> searchProducts(String searchTerm, boolean priceAscending, String category) {
         return getSearchedProducts(searchTerm, category)
                 .stream()
@@ -96,6 +101,7 @@ public class ProductFacade implements ProductFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN"})
     public List<ProductDTO> adminSearchProducts(String searchTerm, boolean priceAscending, String category) {
         return getSearchedProducts(searchTerm, category)
                 .stream()
@@ -105,6 +111,7 @@ public class ProductFacade implements ProductFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN"})
     public boolean addProduct(ProductDTO productDto) {
         if (productDto == null) {
             return false;
@@ -119,6 +126,7 @@ public class ProductFacade implements ProductFacadeRemote {
     }
 
     @Override
+    @RolesAllowed({"ADMIN"})
     public boolean updateProduct(ProductDTO productDto) {
         if (productDto == null || find(productDto.getProductId()) == null) {
             return false;
